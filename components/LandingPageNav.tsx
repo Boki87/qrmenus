@@ -43,7 +43,6 @@ const AppNav = () => {
 
   async function signOut() {
     supabase.auth.signOut();
-    router.push("/auth/signin");
   }
 
 
