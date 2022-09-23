@@ -14,6 +14,7 @@ import AuthLayout from "../../components/AuthLayout";
 import { BsArrowRight } from "react-icons/bs";
 import ThemeToggleButton from "../../components/ThemeToggleButton";
 import SignupForm from "../../components/SignupForm";
+import AppLogo from "../../components/AppLogo";
 
 const Signup: NextPage = () => {
   return (
@@ -26,16 +27,11 @@ const Signup: NextPage = () => {
         flexDirection="column"
         justifyContent="center"
       >
-        <Box mb="20px">
-          <Box fontSize="2xl" fontWeight="bolder">
-            <Text as="span" color={useColorModeValue("gray.600", "white")}>
-              my
-            </Text>
-            <Text as="span" color="blue.600">
-              app
-            </Text>
-          </Box>
-        </Box>
+          <NextLink href="/">
+            <Box mb="20px" cursor="pointer">
+              <AppLogo />
+            </Box>
+          </NextLink>
 
         <Text
           as="h1"

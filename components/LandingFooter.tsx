@@ -20,7 +20,7 @@ const LandingFooter = () => {
         <Grid
           templateColumns={{ base: "repeat(1, 1ft)", md: "repeat(3, 1fr)" }}
         >
-          <GridItem>
+          <GridItem mb="20px">
             <VStack alignItems="flex-start">
               <AppLogo />
               <HStack mt="15px">
@@ -30,7 +30,7 @@ const LandingFooter = () => {
             </VStack>
             <Text color="gray.500" mt="15px">© by myapp. All rights reserved.</Text>
           </GridItem>
-          <GridItem>
+          <GridItem mb="20px">
             <VStack alignItems="flex-start">
                 <Text fontWeight="bold">Links</Text>
                 <NextLink href="#">
@@ -44,7 +44,7 @@ const LandingFooter = () => {
                 </NextLink>
             </VStack>
           </GridItem>
-          <GridItem>
+          <GridItem mb="20px">
             <VStack alignItems="flex-start">
                 <Text fontWeight="bold">Legal</Text>
                 <NextLink href="#">

@@ -21,6 +21,7 @@ import { BsArrowRight } from "react-icons/bs";
 import PasswordForm from "../../components/PasswordForm";
 import ThemeToggleButton from "../../components/ThemeToggleButton";
 import { supabase } from "../../api/supabase-client";
+import AppLogo from "../../components/AppLogo";
 
 const Signin: NextPage = () => {
   async function googleLogin() {
@@ -43,16 +44,11 @@ const Signin: NextPage = () => {
         flexDirection="column"
         justifyContent="center"
       >
-        <Box mb="20px">
-          <Box fontSize="2xl" fontWeight="bolder">
-            <Text as="span" color={useColorModeValue("gray.600", "white")}>
-              my
-            </Text>
-            <Text as="span" color="blue.600">
-              app
-            </Text>
-          </Box>
-        </Box>
+          <NextLink href="/">
+            <Box mb="20px" cursor="pointer">
+              <AppLogo />
+            </Box>
+          </NextLink>
 
         <Text
           as="h1"
