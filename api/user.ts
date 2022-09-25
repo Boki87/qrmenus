@@ -34,10 +34,9 @@ async function signupUser(name: string, email: string, password: string):Promise
 
 
 async function getUserProfileFromSession(user: User): Promise<UserProfile | undefined> {
-    
 
-    let {data, error: profileError}  = await supabase.from<Profile>('profiles').select("*")
-
+    let {data, error: profileError}  = await supabase.from<Profile>('profiles').select("*").match({user_id: user.id})
+    // console.log(data)
     if(!data || profileError) {
       throw new Error('' + profileError)
       return
