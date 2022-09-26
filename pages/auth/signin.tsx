@@ -108,16 +108,6 @@ const Signin: NextPage = () => {
           >
             Google
           </Button>
-          <Button
-            borderRadius="full"
-            bg="black"
-            _hover={{ bg: "gray.800" }}
-            _active={{ bg: "gray.900" }}
-            color="white"
-            flex="1"
-          >
-            Github
-          </Button>
         </HStack>
 
         <HStack mt="30px">
