@@ -83,6 +83,16 @@ const AvatarUpload = () => {
         throw error;
       }
 
+        
+      let {data: updateData, error: updateError} = await supabase.from('profiles').update({avatar: ''}).match({id: user.user_profile_id})
+        
+            if(updateError) {
+                throw updateError
+            }
+
+
+
+
       dispatch(setUser({...user, avatar: undefined}))
 
     } catch (e) {

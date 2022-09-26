@@ -11,12 +11,28 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import AuthLayout from "../../components/AuthLayout";
+import {supabase} from '../../api/supabase-client'
 import { BsArrowRight } from "react-icons/bs";
 import ThemeToggleButton from "../../components/ThemeToggleButton";
 import SignupForm from "../../components/SignupForm";
 import AppLogo from "../../components/AppLogo";
 
 const Signup: NextPage = () => {
+
+
+
+  async function googleLogin() {
+    const { user, session, error } = await supabase.auth.signIn(
+      {
+        provider: "google",
+      },
+      { redirectTo: "http://localhost:3000/auth/callbacks" }
+    );
+    //console.log(user, session, error)
+  }
+
+
+
   return (
     <AuthLayout>
       <Box
@@ -72,18 +88,8 @@ const Signup: NextPage = () => {
           Or continue with
         </Text>
         <HStack>
-          <Button borderRadius="full" colorScheme="blue" flex="1">
+          <Button onClick={googleLogin} borderRadius="full" colorScheme="blue" flex="1">
             Google
-          </Button>
-          <Button
-            borderRadius="full"
-            bg="black"
-            _hover={{ bg: "gray.800" }}
-            _active={{ bg: "gray.900" }}
-            color="white"
-            flex="1"
-          >
-            Github
           </Button>
         </HStack>
 

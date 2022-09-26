@@ -5,12 +5,7 @@ const AppLogo = () => {
     return (
         
           <Box fontSize="2xl" fontWeight="bolder">
-            <Text as="span" color={useColorModeValue("gray.600", "white")}>
-              my
-            </Text>
-            <Text as="span" color="blue.600">
-              app
-            </Text>
+            <img src="/images/logo-wide.png" style={{width:'auto', height:'40px'}} />
           </Box>
     )
 }
