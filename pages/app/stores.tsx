@@ -1,21 +1,18 @@
-import { Box, Text } from "@chakra-ui/react";
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage } from "next";
+import { GetServerSideProps } from "next";
 import { supabase } from "../../api/supabase-client";
 import AppLayout from "../../components/AppLayout";
 import AppContainer from "../../components/Container";
 
-const AppPage: NextPage = () => {
+const Stores: NextPage = () => {
   return (
     <AppLayout>
-      <AppContainer>
-        <Text>Dashboard</Text>
-        <Box h="3000px"></Box>
-      </AppContainer>
+      <AppContainer>Stores</AppContainer>
     </AppLayout>
   );
 };
 
-export default AppPage;
+export default Stores;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { user } = await supabase.auth.api.getUserByCookie(context.req);
@@ -23,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (!user) {
     return {
       redirect: {
-        destination: "/auth/signin",
+        destination: "auth/signin",
         permanent: false,
       },
     };
@@ -32,4 +29,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {},
   };
-};
+}

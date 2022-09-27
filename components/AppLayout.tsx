@@ -1,6 +1,7 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import AppNav from "./AppNav";
+import AppSidenav from './AppSidenav'
 
 interface AppLayoutProps {
   children?: ReactNode;
@@ -8,9 +9,12 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children }: AppLayoutProps) => {
   return (
-    <Box w="full" pt="70px" overflowY="auto">
+    <Box w="full" h="full" display="flex" pt="60px">
       <AppNav />
-      {children}
+      <AppSidenav />
+        <Box flex="1" bg={useColorModeValue('white', 'gray.800')} overflowY="auto">
+            {children}
+        </Box>
     </Box>
   );
 };

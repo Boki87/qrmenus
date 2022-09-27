@@ -43,7 +43,7 @@ const AppNav = () => {
       bg={useColorModeValue("white", "gray.800")}
       zIndex={1}
     >
-      <AppContainer h="full">
+      <AppContainer h="full" maxW="full">
         <HStack h="full">
           <Link href="/">
             <Box cursor="pointer">

@@ -84,7 +84,7 @@ const AvatarUpload = () => {
       }
 
         
-      let {data: updateData, error: updateError} = await supabase.from('profiles').update({avatar: ''}).match({id: user.user_profile_id})
+      let {data: updateData, error: updateError} = await supabase.from('profiles').update({avatar: ''}).match({id: user?.user_profile_id})
         
             if(updateError) {
                 throw updateError
