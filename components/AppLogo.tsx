@@ -5,7 +5,7 @@ const AppLogo = () => {
     return (
         
           <Box fontSize="2xl" fontWeight="bolder">
-            <img src="/images/logo-wide.png" style={{width:'auto', height:'40px'}} />
+            <img src={`/images/logo-wide${useColorModeValue('', '-white')}.png`} style={{width:'auto', height:'40px'}} />
           </Box>
     )
 }
