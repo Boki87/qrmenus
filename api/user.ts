@@ -37,11 +37,13 @@ async function getUserProfileFromSession(user: User): Promise<UserProfile | unde
 
     let {data, error: profileError}  = await supabase.from<Profile>('profiles').select("*").match({user_id: user.id})
     // console.log(data)
-    if(!data || profileError) {
-      throw new Error('' + profileError)
-      return
+    if(profileError) {
+      throw profileError 
     }
 
+    if(!data) {
+        throw new Error('No data')
+    }
 
     return {
       id: user?.id,
