@@ -75,9 +75,16 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
             storesArr.map((store) => (
               <StoreCard
                 store={store}
-                onEditStore={(id: string) => {
-                  setStoreId(id);
-                  setIsDrawerOpen(true);
+                onEditStore={(id?: string) => {
+                  if (id) {
+                    setStoreId(id);
+                    setIsDrawerOpen(true);
+                  }
+                }}
+                onDeleteStore={(id?: string) => {
+                  if (id) {
+                    //TODO: fiinish delete logic
+                  }
                 }}
                 key={store.id}
               />

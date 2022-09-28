@@ -15,9 +15,11 @@ import { FiEdit, FiDelete, FiEye } from "react-icons/fi";
 const StoreCard = ({
   store,
   onEditStore,
+  onDeleteStore,
 }: {
   store: Store;
-  onEditStore: (id: string) => void;
+  onEditStore: (id?: string) => void;
+  onDeleteStore: (id?: string) => void;
 }) => {
   return (
     <Box
@@ -35,10 +37,11 @@ const StoreCard = ({
         display="flex"
         alignItems="center"
         justifyContent="center"
+        p={store?.cover !== "" ? "" : "20px"}
       >
         <Image
           src={store?.cover !== "" ? store.cover : "/images/undraw/store.svg"}
-          objectFit="cover"
+          objectFit={store?.cover !== "" ? "cover" : "contain"}
           alt="store cover image"
           minW="full"
           minH="full"
@@ -51,11 +54,15 @@ const StoreCard = ({
         <Spacer />
         <HStack gap="10px">
           <IconButton
-            onClick={() => onEditStore(store?.id ? store.id : "")}
+            onClick={() => onEditStore(store?.id)}
             aria-label="edit button"
             icon={<FiEdit />}
           />
-          <IconButton aria-label="delete button" icon={<FiDelete />} />
+          <IconButton
+            onClick={() => onDeleteStore(store?.id)}
+            aria-label="delete button"
+            icon={<FiDelete />}
+          />
           <IconButton aria-label="view button" icon={<FiEye />} />
         </HStack>
       </VStack>

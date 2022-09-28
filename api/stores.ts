@@ -1,21 +1,18 @@
-import { supabase } from "./supabase-client"
-import { Store } from "../types/Store"
-
+import { supabase } from "./supabase-client";
+import { Store } from "../types/Store";
 
 async function fetchStoresForUser(userId: string) {
+  const { data, error } = await supabase
+    .from<Store>("stores")
+    .select()
+    .match({ user_id: userId })
+    .order("created_at");
 
-
-    const {data, error} = await supabase.from<Store>('stores').select().match({user_id: userId})
-
-    if(error) {
-        throw error
-    }
-    console.log(data)
-    return data
-
+  if (error) {
+    throw error;
+  }
+  console.log(data);
+  return data;
 }
 
-
-export {
-    fetchStoresForUser,
-}
+export { fetchStoresForUser };

@@ -1,5 +1,8 @@
 import { SyntheticEvent, useEffect, useState } from "react";
 import {
+  HStack,
+  Image,
+  VStack,
   Button,
   Spinner,
   Center,
@@ -19,6 +22,9 @@ import {
 import { supabase } from "../../api/supabase-client";
 import { useAppSelector } from "../../app/hooks";
 import { Store } from "../../types/Store";
+import useUploadFileHook from "../../hooks/useUploadFileHook";
+import { AiOutlineUpload } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 
 interface StoreDrawerProps {
   isOpen: boolean;
@@ -36,6 +42,10 @@ const StoreDrawer = ({
   const user = useAppSelector((state) => state.user.user);
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+
+  const { uploadFile, isUploading, errorUploading, publicUrl } =
+    useUploadFileHook();
 
   const [storeData, setStoreData] = useState<Store>({
     id: "",
@@ -65,6 +75,19 @@ const StoreDrawer = ({
     });
   }
 
+  const setFileHandler = (e: SyntheticEvent) => {
+    let input = e.target as HTMLInputElement;
+
+    if (!input.files || input.files.length === 0) {
+      setFile(null);
+      return;
+    }
+
+    let f = input.files[0];
+
+    setFile(f);
+  };
+
   function updateFormData(e: SyntheticEvent) {
     let input = e.target as HTMLInputElement;
     setStoreData((old) => ({ ...old, [input.name]: input.value }));
@@ -89,20 +112,40 @@ const StoreDrawer = ({
     }
   }
 
-  async function submitHandler(e: SyntheticEvent) {
-    e.preventDefault();
+  async function submitHandler(e?: SyntheticEvent) {
+    if (e) {
+      e.preventDefault();
+    }
     try {
       setIsUpdating(true);
 
       if (storeId === "") {
         let { id, ...rest } = storeData;
         let insertData = rest;
+        insertData.user_id = user?.id;
         const { data, error } = await supabase
           .from("stores")
           .insert([rest])
           .single();
         if (error) {
           throw error;
+        }
+        console.log(data);
+        if (file) {
+          let publicUrl = await uploadFile({
+            bucketName: "public",
+            file,
+            fileName: `${data.id}-cover`,
+            folder: "store-images",
+          });
+          // setStoreData(data);
+          const { data: updateData, error: updateError } = await supabase
+            .from("stores")
+            .update({ cover: publicUrl + "?" + +new Date() })
+            .match({ id: data.id });
+          if (updateError) {
+            throw updateError;
+          }
         }
       } else {
         const { data, error } = await supabase
@@ -120,6 +163,43 @@ const StoreDrawer = ({
     }
   }
 
+  async function removeCover() {
+    if (!storeData?.cover) {
+      return;
+    }
+
+    if (storeData.cover.includes("blob:http")) {
+      setStoreData({ ...storeData, cover: "" });
+      return;
+    }
+
+    let coverUrl = storeData?.cover.split("?")[0].split("/public/public/")[1];
+    if (!coverUrl) {
+      return;
+    }
+    try {
+      const { data, error } = await supabase.storage
+        .from("public")
+        .remove([coverUrl]);
+      if (error) {
+        throw error;
+      }
+
+      const { data: updateData, error: updateError } = await supabase
+        .from("stores")
+        .update({ cover: "" })
+        .match({ id: storeData.id });
+
+      if (updateError) {
+        throw updateError;
+      }
+      setStoreData({ ...storeData, cover: "" });
+      onRefetchStores();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     if (storeId !== "") {
       fetchStoreData(storeId);
@@ -127,6 +207,29 @@ const StoreDrawer = ({
       resetStoreData();
     }
   }, [storeId]);
+
+  useEffect(() => {
+    if (file && storeId !== "") {
+      uploadFile({
+        bucketName: "public",
+        file,
+        fileName: `${storeId}-cover`,
+        folder: "store-images",
+      });
+    }
+
+    if (file && storeId === "") {
+      let img = URL.createObjectURL(file);
+      setStoreData({ ...storeData, cover: img });
+    }
+  }, [file]);
+
+  useEffect(() => {
+    if (publicUrl && storeId !== "") {
+      storeData.cover = publicUrl + "?" + +new Date();
+      submitHandler();
+    }
+  }, [publicUrl]);
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="md">
@@ -212,6 +315,34 @@ const StoreDrawer = ({
                     onInput={updateFormData}
                   />
                 </FormControl>
+                <VStack>
+                  <Image
+                    src={storeData.cover || "/images/undraw/image.svg"}
+                    maxW="200px"
+                    maxH="200px"
+                  />
+                  <HStack>
+                    <Button
+                      as="label"
+                      htmlFor="fileInput"
+                      isLoading={isUploading}
+                      rightIcon={<AiOutlineUpload />}
+                    >
+                      Upload Cover
+                    </Button>
+                    <Button onClick={removeCover} colorScheme="red">
+                      <MdDelete />
+                    </Button>
+                  </HStack>
+                  <input
+                    type="file"
+                    name="fileInput"
+                    id="fileInput"
+                    style={{ display: "none", position: "absolute" }}
+                    accept="image/*"
+                    onChange={setFileHandler}
+                  />
+                </VStack>
               </Box>
             )}
             {isLoading && (
