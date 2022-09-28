@@ -7,6 +7,7 @@ import {
   Spacer,
   Button,
   Grid,
+  Spinner,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
@@ -17,9 +18,30 @@ import { fetchStoresForUser } from "../../api/stores";
 import { Store } from "../../types/Store";
 import StoreCard from "../../components/stores/StoreCard";
 import { IoAddSharp } from "react-icons/io5";
-import DineSvg from "../../assets/undraw/dine.svg";
+import { useState } from "react";
+import StoreDrawer from "../../components/stores/StoreDrawer";
+import { useAppSelector } from "../../app/hooks";
 
 const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
+  const [storesArr, setStoresArr] = useState<Store[] | undefined>(stores);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [storeId, setStoreId] = useState(""); // '' for new store, 'uuid' to edit existing
+  const [isLoading, setIsLoading] = useState(false);
+  const user = useAppSelector((state) => state.user.user);
+  async function fetchStores() {
+    try {
+      setIsLoading(true);
+      if (user?.id) {
+        const updatedStores = await fetchStoresForUser(user?.id);
+        setStoresArr(updatedStores);
+      }
+      setIsLoading(false);
+    } catch (e) {
+      console.log(e);
+      setIsLoading(false);
+    }
+  }
+
   return (
     <AppLayout>
       <AppContainer>
@@ -28,7 +50,16 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
             Your stores
           </Text>
           <Spacer />
-          <Button rightIcon={<IoAddSharp />}>NEW STORE</Button>
+          <Button
+            onClick={() => {
+              setStoreId("");
+              setIsDrawerOpen(true);
+            }}
+            rightIcon={<IoAddSharp />}
+            colorScheme="blue"
+          >
+            NEW STORE
+          </Button>
         </HStack>
         <Grid
           templateColumns={{
@@ -39,16 +70,40 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
           gap="3"
           mt="20px"
         >
-          {stores &&
-            stores.map((store) => <StoreCard store={store} key={store.id} />)}
+          {storesArr &&
+            !isLoading &&
+            storesArr.map((store) => (
+              <StoreCard
+                store={store}
+                onEditStore={(id: string) => {
+                  setStoreId(id);
+                  setIsDrawerOpen(true);
+                }}
+                key={store.id}
+              />
+            ))}
         </Grid>
-        {!stores ||
-          (stores.length == 0 && (
+        {(!storesArr && !isLoading) ||
+          (storesArr?.length == 0 && (
             <VStack w="full">
               <Text>No stores yet</Text>
               <img src="/images/undraw/dine.svg" style={{ height: "200px" }} />
             </VStack>
           ))}
+        {isLoading && (
+          <Center mt="30px">
+            <Spinner color="blue" />
+          </Center>
+        )}
+        <StoreDrawer
+          isOpen={isDrawerOpen}
+          storeId={storeId}
+          onRefetchStores={fetchStores}
+          onClose={() => {
+            setIsDrawerOpen(false);
+            setStoreId("");
+          }}
+        />
       </AppContainer>
     </AppLayout>
   );

@@ -7,19 +7,26 @@ import {
   HStack,
   IconButton,
   VStack,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Store } from "../../types/Store";
 import { FiEdit, FiDelete, FiEye } from "react-icons/fi";
 
-const StoreCard = ({ store }: { store: Store }) => {
+const StoreCard = ({
+  store,
+  onEditStore,
+}: {
+  store: Store;
+  onEditStore: (id: string) => void;
+}) => {
   return (
     <Box
       w="full"
       h="300px"
-      border="1px"
-      borderColor="gray.100"
       borderRadius="md"
+      overflow="hidden"
       shadow="md"
+      bg={useColorModeValue("white", "gray.700")}
     >
       <Box
         w="full"
@@ -30,7 +37,7 @@ const StoreCard = ({ store }: { store: Store }) => {
         justifyContent="center"
       >
         <Image
-          src={store?.cover}
+          src={store?.cover !== "" ? store.cover : "/images/undraw/store.svg"}
           objectFit="cover"
           alt="store cover image"
           minW="full"
@@ -43,7 +50,11 @@ const StoreCard = ({ store }: { store: Store }) => {
         </Center>
         <Spacer />
         <HStack gap="10px">
-          <IconButton aria-label="edit button" icon={<FiEdit />} />
+          <IconButton
+            onClick={() => onEditStore(store?.id ? store.id : "")}
+            aria-label="edit button"
+            icon={<FiEdit />}
+          />
           <IconButton aria-label="delete button" icon={<FiDelete />} />
           <IconButton aria-label="view button" icon={<FiEye />} />
         </HStack>
