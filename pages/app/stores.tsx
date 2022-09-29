@@ -20,9 +20,11 @@ import StoreCard from "../../components/stores/StoreCard";
 import { IoAddSharp } from "react-icons/io5";
 import { useState } from "react";
 import StoreDrawer from "../../components/stores/StoreDrawer";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { openConfirmDialog } from "../../features/modals/modal-slice";
 
 const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
+  const dispatch = useAppDispatch();
   const [storesArr, setStoresArr] = useState<Store[] | undefined>(stores);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [storeId, setStoreId] = useState(""); // '' for new store, 'uuid' to edit existing
@@ -39,6 +41,27 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
     } catch (e) {
       console.log(e);
       setIsLoading(false);
+    }
+  }
+
+  async function deleteStoreHandler(id?: string) {
+    try {
+      let { payload: isConfirmed } = await dispatch(
+        openConfirmDialog("Sure yuo want to delete this store?")
+      );
+      if (isConfirmed) {
+        const { data, error } = await supabase
+          .from("stores")
+          .delete()
+          .match({ id });
+        if (error) {
+          throw error;
+        }
+        setStoresArr(storesArr?.filter((s) => s.id !== id));
+        // await fetchStores();
+      }
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -81,11 +104,7 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
                     setIsDrawerOpen(true);
                   }
                 }}
-                onDeleteStore={(id?: string) => {
-                  if (id) {
-                    //TODO: fiinish delete logic
-                  }
-                }}
+                onDeleteStore={deleteStoreHandler}
                 key={store.id}
               />
             ))}

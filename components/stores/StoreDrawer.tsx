@@ -330,9 +330,15 @@ const StoreDrawer = ({
                     >
                       Upload Cover
                     </Button>
-                    <Button onClick={removeCover} colorScheme="red">
-                      <MdDelete />
-                    </Button>
+                    {storeData.cover !== "" && (
+                      <Button
+                        fontSize="xl"
+                        onClick={removeCover}
+                        colorScheme="red"
+                      >
+                        <MdDelete />
+                      </Button>
+                    )}
                   </HStack>
                   <input
                     type="file"
