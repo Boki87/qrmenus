@@ -29,11 +29,11 @@ const AvatarUpload = () => {
   };
 
   useEffect(() => {
-    if (file) {
+    if (file && user) {
       uploadFile({
         bucketName: "public",
         file,
-        fileName: `${user?.id}-avatar`,
+        fileName: `${user.id}-avatar`,
         folder: "avatars",
       });
     }
@@ -56,7 +56,9 @@ const AvatarUpload = () => {
     }
   }
   useEffect(() => {
-    updateUserAvatar();
+    if (publicUrl) {
+      updateUserAvatar();
+    }
   }, [publicUrl]);
 
   async function removeAvatar() {

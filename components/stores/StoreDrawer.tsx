@@ -130,7 +130,6 @@ const StoreDrawer = ({
         if (error) {
           throw error;
         }
-        console.log(data);
         if (file) {
           let publicUrl = await uploadFile({
             bucketName: "public",
@@ -230,6 +229,13 @@ const StoreDrawer = ({
       submitHandler();
     }
   }, [publicUrl]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setFile(null);
+      resetStoreData();
+    }
+  }, [isOpen]);
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="md">

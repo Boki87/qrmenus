@@ -11,7 +11,6 @@ async function fetchStoresForUser(userId: string) {
   if (error) {
     throw error;
   }
-  console.log(data);
   return data;
 }
 

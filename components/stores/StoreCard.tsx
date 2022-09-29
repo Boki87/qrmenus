@@ -8,9 +8,11 @@ import {
   IconButton,
   VStack,
   useColorModeValue,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Store } from "../../types/Store";
 import { FiEdit, FiDelete, FiEye } from "react-icons/fi";
+import { ImQrcode } from "react-icons/im";
 
 const StoreCard = ({
   store,
@@ -38,6 +40,7 @@ const StoreCard = ({
         alignItems="center"
         justifyContent="center"
         p={store?.cover !== "" ? "" : "20px"}
+        bg="gray.100"
       >
         <Image
           src={store?.cover !== "" ? store.cover : "/images/undraw/store.svg"}
@@ -53,17 +56,35 @@ const StoreCard = ({
         </Center>
         <Spacer />
         <HStack gap="10px">
-          <IconButton
-            onClick={() => onEditStore(store?.id)}
-            aria-label="edit button"
-            icon={<FiEdit />}
-          />
-          <IconButton
-            onClick={() => onDeleteStore(store?.id)}
-            aria-label="delete button"
-            icon={<FiDelete />}
-          />
-          <IconButton aria-label="view button" icon={<FiEye />} />
+          <Tooltip label="Edit Store">
+            <IconButton
+              onClick={() => onEditStore(store?.id)}
+              aria-label="edit button"
+              icon={<FiEdit />}
+            />
+          </Tooltip>
+          <Tooltip label="Delete Store">
+            <IconButton
+              colorScheme="red"
+              onClick={() => onDeleteStore(store?.id)}
+              aria-label="delete button"
+              icon={<FiDelete />}
+            />
+          </Tooltip>
+          <Tooltip label="Preview">
+            <IconButton
+              colorScheme="blue"
+              aria-label="view button"
+              icon={<FiEye />}
+            />
+          </Tooltip>
+          <Tooltip label="View QR Code">
+            <IconButton
+              colorScheme="teal"
+              aria-label="qr code button"
+              icon={<ImQrcode />}
+            />
+          </Tooltip>
         </HStack>
       </VStack>
     </Box>

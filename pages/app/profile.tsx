@@ -33,16 +33,21 @@ const AppPage: NextPage = () => {
   }
 
   async function updateName() {
-    if(!user) return
+    if (!user) return;
     try {
       setIsLoading(true);
-      let {data, error} = await supabase.from('profiles').update({name: userName}).match({id: user.user_profile_id})
-      if(error) throw error
-      console.log(data)
-      dispatch(setUser({
-        ...user,
-        name: userName,
-      }));
+      let { data, error } = await supabase
+        .from("profiles")
+        .update({ name: userName })
+        .match({ id: user.user_profile_id });
+      if (error) throw error;
+      console.log(data);
+      dispatch(
+        setUser({
+          ...user,
+          name: userName,
+        })
+      );
       setIsLoading(false);
     } catch (e) {
       console.log(e);
