@@ -31,7 +31,6 @@ const FoodItems = ({ selectedCategory }: FoodItemsProps) => {
         .match({ food_category_id: selectedCategory, user_id: user.id });
 
       if (error) throw error;
-      console.log(data);
       setFoodItems(data);
       setLoadingFoods(false);
     } catch (e) {
