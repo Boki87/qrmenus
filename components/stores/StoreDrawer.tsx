@@ -238,7 +238,7 @@ const StoreDrawer = ({
   }, [isOpen]);
 
   return (
-    <Drawer isOpen={isOpen} onClose={onClose} placement="right" size="md">
+    <Drawer isOpen={isOpen} onClose={onClose} placement={'right'} size={{base: 'full', md:'md'}}>
       <DrawerOverlay />
       <form onSubmit={submitHandler}>
         <DrawerContent borderLeftRadius="md">

@@ -32,7 +32,7 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
   const user = useAppSelector((state) => state.user.user);
   async function fetchStores() {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       if (user?.id) {
         const updatedStores = await fetchStoresForUser(user?.id);
         setStoresArr(updatedStores);

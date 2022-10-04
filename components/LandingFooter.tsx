@@ -18,7 +18,7 @@ const LandingFooter = () => {
     <Box as="footer" py="50px">
       <AppContainer>
         <Grid
-          templateColumns={{ base: "repeat(1, 1ft)", md: "repeat(3, 1fr)" }}
+          templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(3, 1fr)" }}
         >
           <GridItem mb="20px">
             <VStack alignItems="flex-start">
