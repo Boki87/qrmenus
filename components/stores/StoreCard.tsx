@@ -11,8 +11,9 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { Store } from "../../types/Store";
-import { FiEdit, FiDelete, FiEye } from "react-icons/fi";
+import { FiEdit, FiEye } from "react-icons/fi";
 import { ImQrcode } from "react-icons/im";
+import { AiFillDelete } from "react-icons/ai";
 
 const StoreCard = ({
   store,
@@ -61,26 +62,27 @@ const StoreCard = ({
               onClick={() => onEditStore(store?.id)}
               aria-label="edit button"
               icon={<FiEdit />}
+              variant="outline"
             />
           </Tooltip>
           <Tooltip label="Delete Store">
             <IconButton
-              colorScheme="red"
+              variant="outline"
               onClick={() => onDeleteStore(store?.id)}
               aria-label="delete button"
-              icon={<FiDelete />}
+              icon={<AiFillDelete />}
             />
           </Tooltip>
           <Tooltip label="Preview">
             <IconButton
-              colorScheme="blue"
+              variant="outline"
               aria-label="view button"
               icon={<FiEye />}
             />
           </Tooltip>
           <Tooltip label="View QR Code">
             <IconButton
-              colorScheme="teal"
+              variant="outline"
               aria-label="qr code button"
               icon={<ImQrcode />}
             />

@@ -24,12 +24,14 @@ interface FoodsPageProps {
 const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
   const dispatch = useAppDispatch();
   const [selectedStore, setSelectedStore] = useState("");
+
+  /* CATEGORIES STATE */
   const [categories, setCategories] = useState<FoodCategory[] | []>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [loadingCategories, setLoadingCategories] = useState(false);
-
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState("");
+  /* CATEGORIES STATE END */
 
   async function fetchAndSetCategories(storeId: string) {
     const cats = await fetchCategoriesForStore(storeId, user.id);
@@ -96,6 +98,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
             mt="20px"
             templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" }}
             gap={{ base: 0, md: 2 }}
+            mb="100px"
           >
             <GridItem minW="200px">
               <FoodCategories
@@ -113,7 +116,10 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
               />
             </GridItem>
             <GridItem colSpan={3}>
-              <FoodItems selectedCategory={selectedCategory} />
+              <FoodItems
+                selectedStore={selectedStore}
+                selectedCategory={selectedCategory}
+              />
             </GridItem>
           </Grid>
         </AppContainer>
@@ -160,7 +166,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   try {
     const stores = await fetchStoresForUser(user.id);
-    console.log(stores);
 
     return {
       props: {

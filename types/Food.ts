@@ -5,7 +5,7 @@ export type Food = {
   food_category_id: string;
   name: string;
   image?: string;
-  desctiption?: string;
+  description?: string;
   comment?: string;
   price?: number;
   currency?: string;

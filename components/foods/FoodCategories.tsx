@@ -78,10 +78,10 @@ const FoodCategories = ({
           ))}
         {!loading && categories.length === 0 && (
           <Box>
-            <Center>
+            <Center mb="10px">
               <img
                 src="/images/undraw/no-results.svg"
-                style={{ width: "100px" }}
+                style={{ width: "150px" }}
               />
             </Center>
             <Center>
