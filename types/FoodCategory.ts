@@ -1,5 +1,5 @@
 export type FoodCategory = {
-  id: string;
+  id: number;
   user_id?: string;
   store_id?: string;
   name: string;

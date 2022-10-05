@@ -34,7 +34,7 @@ interface FoodItemDrawerProps {
   isOpen: boolean;
   foodItemId: string;
   storeId: string;
-  categoryId: string;
+  categoryId: number;
   onClose: () => void;
   onRefetchFoodList: () => void;
 }

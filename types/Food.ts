@@ -2,7 +2,7 @@ export type Food = {
   id: string;
   user_id: string;
   store_id: string;
-  food_category_id: string;
+  food_category_id: number;
   name: string;
   image?: string;
   description?: string;

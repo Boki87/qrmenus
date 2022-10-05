@@ -1,4 +1,5 @@
-import { useState, useEffect, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent, useCallback } from "react";
+import update from "immutability-helper";
 import type { NextPage } from "next";
 import { GetServerSideProps } from "next";
 import { supabase } from "../../api/supabase-client";
@@ -27,10 +28,10 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
 
   /* CATEGORIES STATE */
   const [categories, setCategories] = useState<FoodCategory[] | []>([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(-1);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
-  const [categoryToEdit, setCategoryToEdit] = useState("");
+  const [categoryToEdit, setCategoryToEdit] = useState(-1);
   /* CATEGORIES STATE END */
 
   async function fetchAndSetCategories(storeId: string) {
@@ -38,7 +39,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
     setCategories(cats);
   }
 
-  async function deleteCategoryHandler(id: string) {
+  async function deleteCategoryHandler(id: number) {
     try {
       const { payload: isConfirmed } = await dispatch(
         openConfirmDialog("Sure you want to delete this category?")
@@ -60,7 +61,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
   async function storeSelectHandler(e: SyntheticEvent) {
     let { value: selectedValue } = e.target as HTMLSelectElement;
     setSelectedStore(selectedValue);
-    setSelectedCategory("");
+    setSelectedCategory(-1);
     if (selectedValue) {
       try {
         setLoadingCategories(true);
@@ -72,10 +73,24 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
       }
     } else {
       setCategories([]);
-      setSelectedCategory("");
+      setSelectedCategory(-1);
       setLoadingCategories(false);
     }
   }
+
+  const reorderCategoriesHandler = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      setCategories((prevCategories: FoodCategory[]) =>
+        update(prevCategories, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, prevCategories[dragIndex] as FoodCategory],
+          ],
+        })
+      );
+    },
+    []
+  );
 
   return (
     <>
@@ -108,6 +123,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
                 selectedStore={selectedStore}
                 onSelectCategory={(id) => setSelectedCategory(id)}
                 onOpenModal={() => setIsCategoryModalOpen(true)}
+                reorderCategories={reorderCategoriesHandler}
                 onEdit={(id) => {
                   setCategoryToEdit(id);
                   setIsCategoryModalOpen(true);
@@ -142,7 +158,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
           setCategories(updatedCats);
         }}
         onClose={() => {
-          setCategoryToEdit("");
+          setCategoryToEdit(-1);
           setIsCategoryModalOpen(false);
         }}
       />

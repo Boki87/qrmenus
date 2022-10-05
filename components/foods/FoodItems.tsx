@@ -21,7 +21,7 @@ import { MdFastfood } from "react-icons/md";
 import FoodItemDrawer from "../../components/foods/FoodItemDrawer";
 
 interface FoodItemsProps {
-  selectedCategory: string;
+  selectedCategory: number;
   selectedStore: string;
 }
 
@@ -37,7 +37,7 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
   const [isFoodItemDrawerOpen, setIsFoodDrawerOpen] = useState(false);
   /* FOODS STATE END*/
 
-  async function fetchAndSetFoods(categoryId: string) {
+  async function fetchAndSetFoods(categoryId: number) {
     if (!user?.id) return;
     try {
       setLoadingFoods(true);
@@ -82,7 +82,7 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
   }
 
   useEffect(() => {
-    if (selectedCategory !== "") {
+    if (selectedCategory !== -1) {
       fetchAndSetFoods(selectedCategory);
     }
   }, [selectedCategory]);
@@ -109,7 +109,7 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
             }}
             rightIcon={<HiOutlinePlus />}
             colorScheme="blue"
-            disabled={selectedCategory === ""}
+            disabled={selectedCategory === -1}
             size="sm"
           >
             NEW
@@ -128,7 +128,7 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
             </Center>
           </Box>
         )}
-        {!loadingFoods && (selectedCategory === "" || foodItems.length === 0) && (
+        {!loadingFoods && (selectedCategory === -1 || foodItems.length === 0) && (
           <Box
             w="full"
             h="full"
@@ -151,7 +151,7 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
         )}
         <Box overflowY="auto" h="calc(100% - 50px)">
           {!loadingFoods &&
-            selectedCategory !== "" &&
+            selectedCategory !== 1 &&
             foodItems.length > 0 &&
             foodItems.map((food) => (
               <FoodItem

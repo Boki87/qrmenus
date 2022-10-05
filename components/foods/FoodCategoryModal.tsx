@@ -22,7 +22,7 @@ interface FoodCategoryModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedStore: string;
-  categoryToEdit: string;
+  categoryToEdit: number;
   onAdded: (category: FoodCategory) => void;
   onUpdated: (data: FoodCategory) => void;
 }
@@ -50,7 +50,7 @@ const FoodCategoryModal = ({
     if (!user?.id || name === "") {
       return;
     }
-    if (categoryToEdit === "") {
+    if (categoryToEdit === -1) {
       await addNewHandler(selectedStore, user.id);
     } else {
       await updateHandler(selectedStore, user.id, categoryToEdit);
@@ -85,7 +85,7 @@ const FoodCategoryModal = ({
   async function updateHandler(
     storeId: string,
     userId: string,
-    categoryId: string
+    categoryId: number
   ) {
     try {
       setLoading(true);
@@ -112,7 +112,7 @@ const FoodCategoryModal = ({
     }
   }
 
-  async function fetchAndSetName(categoryId: string) {
+  async function fetchAndSetName(categoryId: number) {
     try {
       setLoadingFromDb(true);
       const { data, error } = await supabase
@@ -132,7 +132,7 @@ const FoodCategoryModal = ({
   }
 
   useEffect(() => {
-    if (categoryToEdit !== "") {
+    if (categoryToEdit !== -1) {
       fetchAndSetName(categoryToEdit);
     }
   }, [categoryToEdit]);
@@ -149,7 +149,7 @@ const FoodCategoryModal = ({
       <form onSubmit={onSubmitHandler}>
         <ModalContent>
           <ModalHeader>
-            {categoryToEdit === ""
+            {categoryToEdit === -1
               ? "Create a new category"
               : "Update category"}
           </ModalHeader>
