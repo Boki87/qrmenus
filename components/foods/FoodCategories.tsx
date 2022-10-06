@@ -1,4 +1,5 @@
 import { SyntheticEvent, useCallback, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   Box,
   useColorModeValue,
@@ -17,14 +18,12 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { FoodCategory } from "../../types/FoodCategory";
 import { HiOutlinePlus } from "react-icons/hi";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { setSelectedCategory } from "../../features/food/food-slice";
 
 interface FoodCategoriesProps {
   categories: FoodCategory[] | [];
   loading: boolean;
-  selectedCategory: number;
-  selectedStore: string;
   reorderCategories: (dragIndex: number, hoverIndex: number) => void;
-  onSelectCategory: (id: number) => void;
   onOpenModal: () => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
@@ -33,29 +32,32 @@ interface FoodCategoriesProps {
 const FoodCategories = ({
   categories,
   loading,
-  selectedCategory,
-  selectedStore,
   reorderCategories,
-  onSelectCategory,
   onOpenModal,
   onDelete,
   onEdit,
 }: FoodCategoriesProps) => {
-  const renderCategory = useCallback((cat: FoodCategory, index: number) => {
-    return (
-      <FoodCategory
-        id={cat.id}
-        name={cat.name}
-        selectedCategory={selectedCategory}
-        onSelectCategory={onSelectCategory}
-        onDelete={onDelete}
-        onEdit={onEdit}
-        key={cat.id}
-        index={index}
-        moveCategory={reorderCategories}
-      />
-    );
-  }, []);
+  const { selectedStore, selectedCategory } = useAppSelector(
+    (state) => state.food
+  );
+
+  const renderCategory = useCallback(
+    (cat: FoodCategory, index: number) => {
+      return (
+        <FoodCategory
+          id={cat.id}
+          name={cat.name}
+          selectedCategory={selectedCategory}
+          onDelete={onDelete}
+          onEdit={onEdit}
+          key={cat.id}
+          index={index}
+          moveCategory={reorderCategories}
+        />
+      );
+    },
+    [selectedCategory]
+  );
 
   return (
     <Box
@@ -114,7 +116,6 @@ interface FoodCategoryProps {
   id: number;
   name: string;
   selectedCategory: number;
-  onSelectCategory: (id: number) => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
   index: number;
@@ -135,14 +136,13 @@ const FoodCategory = ({
   id,
   name,
   selectedCategory,
-  onSelectCategory,
   onEdit,
   onDelete,
   index,
   moveCategory,
 }: FoodCategoryProps) => {
+  const dispatch = useAppDispatch();
   const active = id === selectedCategory;
-
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop<
@@ -235,7 +235,7 @@ const FoodCategory = ({
       px="10px"
       cursor="pointer"
       mb="10px"
-      onClick={() => onSelectCategory(id)}
+      onClick={() => dispatch(setSelectedCategory(id))}
       ref={ref}
       opacity={opacity}
       data-handler-id={handlerId}

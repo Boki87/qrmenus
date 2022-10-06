@@ -33,8 +33,6 @@ import { MdDelete } from "react-icons/md";
 interface FoodItemDrawerProps {
   isOpen: boolean;
   foodItemId: string;
-  storeId: string;
-  categoryId: number;
   onClose: () => void;
   onRefetchFoodList: () => void;
 }
@@ -42,11 +40,11 @@ interface FoodItemDrawerProps {
 const FoodItemDrawer = ({
   isOpen,
   foodItemId,
-  storeId,
-  categoryId,
   onClose,
   onRefetchFoodList,
 }: FoodItemDrawerProps) => {
+  const { selectedStore: storeId, selectedCategory: categoryId } =
+    useAppSelector((state) => state.food);
   const user = useAppSelector((state) => state.user.user);
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -59,9 +57,9 @@ const FoodItemDrawer = ({
 
   const [foodItemData, setFoodItemData] = useState<Food>({
     id: "",
-    user_id: user?.id || "",
-    store_id: storeId,
-    food_category_id: categoryId,
+    user_id: "",
+    store_id: "",
+    food_category_id: 0,
     name: "",
     image: "",
     description: "",
@@ -76,9 +74,11 @@ const FoodItemDrawer = ({
   });
 
   function resetStoreData() {
+    if (!user) return;
+
     setFoodItemData({
       id: "",
-      user_id: user?.id || "",
+      user_id: user.id,
       store_id: storeId,
       food_category_id: categoryId,
       name: "",
@@ -271,6 +271,8 @@ const FoodItemDrawer = ({
   useEffect(() => {
     if (!isOpen) {
       setFile(null);
+      resetStoreData();
+    } else if (isOpen && foodItemId === "") {
       resetStoreData();
     }
   }, [isOpen]);

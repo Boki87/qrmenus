@@ -14,8 +14,13 @@ import { User } from "../../types/User";
 import { FoodCategory } from "../../types/FoodCategory";
 import FoodCategoryModal from "../../components/foods/FoodCategoryModal";
 import { openConfirmDialog } from "../../features/modals/modal-slice";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import FoodItems from "../../components/foods/FoodItems";
+import {
+  setSelectedStore,
+  setSelectedCategory,
+  setCategoryToEdit,
+} from "../../features/food/food-slice";
 
 interface FoodsPageProps {
   stores: Store[] | [];
@@ -24,15 +29,14 @@ interface FoodsPageProps {
 
 const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
   const dispatch = useAppDispatch();
-  const [selectedStore, setSelectedStore] = useState("");
 
-  /* CATEGORIES STATE */
+  const { selectedStore, selectedCategory, categoryToEdit } = useAppSelector(
+    (state) => state.food
+  );
+
   const [categories, setCategories] = useState<FoodCategory[] | []>([]);
-  const [selectedCategory, setSelectedCategory] = useState(-1);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
-  const [categoryToEdit, setCategoryToEdit] = useState(-1);
-  /* CATEGORIES STATE END */
 
   async function fetchAndSetCategories(storeId: string) {
     const cats = await fetchCategoriesForStore(storeId, user.id);
@@ -40,19 +44,29 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
   }
 
   async function deleteCategoryHandler(id: number) {
-    try {
-      const { payload: isConfirmed } = await dispatch(
-        openConfirmDialog("Sure you want to delete this category?")
-      );
+    const { payload: isConfirmed } = await dispatch(
+      openConfirmDialog("Sure you want to delete this category?")
+    );
 
-      if (isConfirmed) {
-        const { data, error } = await supabase
-          .from("food_categories")
-          .delete()
-          .match({ id });
-        if (error) throw error;
-        setCategories(categories.filter((c) => c.id !== id));
-      }
+    if (!isConfirmed) return;
+    dispatch(setSelectedCategory(-1));
+    try {
+      const { data: foodData, error: foodError } = await supabase
+        .from("foods")
+        .delete()
+        .match({ food_category_id: id });
+
+      if (foodError) throw foodError;
+
+      const { data, error } = await supabase
+        .from("food_categories")
+        .delete()
+        .match({ id });
+      if (error) throw error;
+
+      setCategories((prevCats) => {
+        return prevCats.filter((c) => c.id !== id);
+      });
     } catch (e) {
       console.log(e);
     }
@@ -60,8 +74,8 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
 
   async function storeSelectHandler(e: SyntheticEvent) {
     let { value: selectedValue } = e.target as HTMLSelectElement;
-    setSelectedStore(selectedValue);
-    setSelectedCategory(-1);
+    dispatch(setSelectedStore(selectedValue));
+    dispatch(setSelectedCategory(-1));
     if (selectedValue) {
       try {
         setLoadingCategories(true);
@@ -73,24 +87,49 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
       }
     } else {
       setCategories([]);
-      setSelectedCategory(-1);
+      dispatch(setSelectedCategory(-1));
       setLoadingCategories(false);
+    }
+  }
+
+  async function reorderOnServer(newCats: FoodCategory[]) {
+    try {
+      const { data, error } = await supabase
+        .from("food_categories")
+        .upsert(newCats, { onConflict: "id" });
+
+      if (error) throw error;
+    } catch (e) {
+      console.log(e);
     }
   }
 
   const reorderCategoriesHandler = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      setCategories((prevCategories: FoodCategory[]) =>
-        update(prevCategories, {
+      setCategories((prevCategories: FoodCategory[]) => {
+        let newCats = update(prevCategories, {
           $splice: [
             [dragIndex, 1],
             [hoverIndex, 0, prevCategories[dragIndex] as FoodCategory],
           ],
-        })
-      );
+        });
+
+        let arr = newCats.map((c, i) => {
+          return { ...c, order_index: i + 1 };
+        });
+        //update order on server
+        reorderOnServer(arr);
+
+        return arr;
+      });
     },
     []
   );
+
+  useEffect(() => {
+    dispatch(setSelectedStore(""));
+    dispatch(setSelectedCategory(-1));
+  }, []);
 
   return (
     <>
@@ -119,23 +158,17 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
               <FoodCategories
                 categories={categories}
                 loading={loadingCategories}
-                selectedCategory={selectedCategory}
-                selectedStore={selectedStore}
-                onSelectCategory={(id) => setSelectedCategory(id)}
                 onOpenModal={() => setIsCategoryModalOpen(true)}
                 reorderCategories={reorderCategoriesHandler}
                 onEdit={(id) => {
-                  setCategoryToEdit(id);
+                  dispatch(setCategoryToEdit(id));
                   setIsCategoryModalOpen(true);
                 }}
                 onDelete={deleteCategoryHandler}
               />
             </GridItem>
             <GridItem colSpan={3}>
-              <FoodItems
-                selectedStore={selectedStore}
-                selectedCategory={selectedCategory}
-              />
+              <FoodItems />
             </GridItem>
           </Grid>
         </AppContainer>
@@ -144,6 +177,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
         selectedStore={selectedStore}
         categoryToEdit={categoryToEdit}
         isOpen={isCategoryModalOpen}
+        categories={categories}
         onAdded={(newCat) => {
           setCategories([...categories, newCat]);
         }}
@@ -158,7 +192,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
           setCategories(updatedCats);
         }}
         onClose={() => {
-          setCategoryToEdit(-1);
+          dispatch(setCategoryToEdit(-1));
           setIsCategoryModalOpen(false);
         }}
       />

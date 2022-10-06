@@ -23,6 +23,7 @@ interface FoodCategoryModalProps {
   onClose: () => void;
   selectedStore: string;
   categoryToEdit: number;
+  categories: FoodCategory[] | [];
   onAdded: (category: FoodCategory) => void;
   onUpdated: (data: FoodCategory) => void;
 }
@@ -32,6 +33,7 @@ const FoodCategoryModal = ({
   onClose,
   selectedStore,
   categoryToEdit,
+  categories,
   onAdded,
   onUpdated,
 }: FoodCategoryModalProps) => {
@@ -60,6 +62,15 @@ const FoodCategoryModal = ({
   async function addNewHandler(storeId: string, userId: string) {
     try {
       setLoading(true);
+
+      let categoriesIndexes = [0];
+      let lastOrderIndex = 0;
+      if (categories && categories.length > 0) {
+        categoriesIndexes = categories.map((c) => c.order_index || 0);
+        lastOrderIndex = Math.max(...categoriesIndexes);
+      }
+
+      let nextOrderIndex = lastOrderIndex + 1;
       const { data, error } = await supabase
         .from("food_categories")
         .insert([
@@ -67,6 +78,7 @@ const FoodCategoryModal = ({
             name,
             store_id: storeId,
             user_id: userId,
+            order_index: nextOrderIndex,
           },
         ])
         .single();

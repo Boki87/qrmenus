@@ -1,6 +1,7 @@
 import { configureStore, getDefaultMiddleware, Store } from "@reduxjs/toolkit";
 import userReducer from "../features/user/user-slice";
 import modalsReducer from "../features/modals/modal-slice";
+import foodReducer from "../features/food/food-slice";
 
 const thunkArguments = {} as { store: Store };
 
@@ -14,6 +15,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     modals: modalsReducer,
+    food: foodReducer,
   },
   middleware: customizedMiddleware,
 });

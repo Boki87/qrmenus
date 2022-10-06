@@ -20,12 +20,10 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdFastfood } from "react-icons/md";
 import FoodItemDrawer from "../../components/foods/FoodItemDrawer";
 
-interface FoodItemsProps {
-  selectedCategory: number;
-  selectedStore: string;
-}
-
-const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
+const FoodItems = () => {
+  const { selectedCategory, selectedStore } = useAppSelector(
+    (state) => state.food
+  );
   const dispatch = useAppDispatch();
 
   const [foodItems, setFoodItems] = useState<Food[] | []>([]);
@@ -38,6 +36,7 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
   /* FOODS STATE END*/
 
   async function fetchAndSetFoods(categoryId: number) {
+    console.log(4444);
     if (!user?.id) return;
     try {
       setLoadingFoods(true);
@@ -80,6 +79,10 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
       console.log(e);
     }
   }
+
+  useEffect(() => {
+    setFoodItems([]);
+  }, [selectedStore]);
 
   useEffect(() => {
     if (selectedCategory !== -1) {
@@ -151,7 +154,7 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
         )}
         <Box overflowY="auto" h="calc(100% - 50px)">
           {!loadingFoods &&
-            selectedCategory !== 1 &&
+            selectedCategory !== -1 &&
             foodItems.length > 0 &&
             foodItems.map((food) => (
               <FoodItem
@@ -169,8 +172,6 @@ const FoodItems = ({ selectedCategory, selectedStore }: FoodItemsProps) => {
       <FoodItemDrawer
         isOpen={isFoodItemDrawerOpen}
         foodItemId={foodItemToEdit}
-        storeId={selectedStore}
-        categoryId={selectedCategory}
         onRefetchFoodList={refetchFoodList}
         onClose={() => {
           setFoodItemToEdit("");
