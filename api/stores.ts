@@ -14,4 +14,16 @@ async function fetchStoresForUser(userId: string) {
   return data;
 }
 
-export { fetchStoresForUser };
+async function fetchStoreData(id: string | string[]) {
+  const { data, error } = await supabase
+    .from("stores")
+    .select(`*, food_categories(*), foods(*)`)
+    .match({ id })
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
+export { fetchStoresForUser, fetchStoreData };
