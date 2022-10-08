@@ -1,5 +1,7 @@
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import {
+  InputGroup,
+  InputRightAddon,
   Spacer,
   Switch,
   HStack,
@@ -367,6 +369,22 @@ const FoodItemDrawer = ({
                       onInput={updateFormData}
                       flex={1}
                     />
+                  </HStack>
+                </FormControl>
+                <FormControl mb="20px">
+                  <FormLabel>Prepapration time</FormLabel>
+                  <HStack>
+                    <InputGroup>
+                      <Input
+                        placeholder=""
+                        name="prep_time"
+                        type="number"
+                        value={foodItemData.prep_time}
+                        onInput={updateFormData}
+                        flex={4}
+                      />
+                      <InputRightAddon children="min" />
+                    </InputGroup>
                   </HStack>
                 </FormControl>
                 <FormControl

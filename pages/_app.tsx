@@ -13,6 +13,7 @@ import { store } from "../app/store";
 import AuthWrapper from "../components/AuthWrapper";
 import AppConfirmDialog from "../components/AppConfirmDialog";
 import "nprogress/nprogress.css";
+import PreviewDrawer from "../components/PreviewDrawer";
 
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
@@ -38,6 +39,7 @@ function MyApp({ Component, pageProps }: AppProps & AppPropsExtended) {
         <ChakraProvider theme={theme} colorModeManager={colorModeManager}>
           <Component {...pageProps} />
           <AppConfirmDialog />
+          <PreviewDrawer />
         </ChakraProvider>
       </AuthWrapper>
     </Provider>

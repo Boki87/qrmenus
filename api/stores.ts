@@ -12,6 +12,8 @@ async function fetchStoresForUser(userId: string) {
     throw error;
   }
   return data;
+
+
 }
 
 async function fetchStoreData(id: string | string[]) {

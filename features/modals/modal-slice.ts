@@ -16,6 +16,10 @@ interface ModalsState {
     isDeclinded: boolean;
     message: string;
   };
+  previewStoreDrawer: {
+    isOpen: boolean;
+    storeId: string;
+  };
 }
 
 const initialState: ModalsState = {
@@ -24,6 +28,10 @@ const initialState: ModalsState = {
     message: "",
     isConfirmed: false,
     isDeclinded: false,
+  },
+  previewStoreDrawer: {
+    isOpen: false,
+    storeId: "",
   },
 };
 
@@ -55,11 +63,24 @@ const modals = createSlice({
       state.alertDialog.isDeclinded = false;
       state.alertDialog.message = "";
     },
+    openPreview(state, action: PayloadAction<string>) {
+      state.previewStoreDrawer.storeId = action.payload;
+      state.previewStoreDrawer.isOpen = true;
+    },
+    closePreview(state) {
+      state.previewStoreDrawer.isOpen = false;
+    },
   },
 });
 
-export const { alertOpen, alertDecline, alertConfirm, alertClose } =
-  modals.actions;
+export const {
+  alertOpen,
+  alertDecline,
+  alertConfirm,
+  alertClose,
+  openPreview,
+  closePreview,
+} = modals.actions;
 export default modals.reducer;
 
 export const openConfirmDialog = createAsyncThunk<

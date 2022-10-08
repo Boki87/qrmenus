@@ -14,6 +14,8 @@ import { Store } from "../../types/Store";
 import { FiEdit, FiEye } from "react-icons/fi";
 import { ImQrcode } from "react-icons/im";
 import { AiFillDelete } from "react-icons/ai";
+import { useAppDispatch } from "../../app/hooks";
+import { openPreview } from "../../features/modals/modal-slice";
 
 const StoreCard = ({
   store,
@@ -24,6 +26,22 @@ const StoreCard = ({
   onEditStore: (id?: string) => void;
   onDeleteStore: (id?: string) => void;
 }) => {
+  const dispatch = useAppDispatch();
+
+  function openQrCode() {
+    window.open(
+      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://192.168.0.105:3000/store/${store.id}`,
+      "_blank"
+    );
+  }
+
+  function onOpenPreview() {
+        console.log(store.id)
+    if (store?.id) {
+      dispatch(openPreview(store.id));
+    }
+  }
+
   return (
     <Box
       w="full"
@@ -75,6 +93,7 @@ const StoreCard = ({
           </Tooltip>
           <Tooltip label="Preview">
             <IconButton
+              onClick={onOpenPreview}
               variant="outline"
               aria-label="view button"
               icon={<FiEye />}
@@ -82,6 +101,7 @@ const StoreCard = ({
           </Tooltip>
           <Tooltip label="View QR Code">
             <IconButton
+              onClick={openQrCode}
               variant="outline"
               aria-label="qr code button"
               icon={<ImQrcode />}

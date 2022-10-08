@@ -1,22 +1,13 @@
+import {Box} from '@chakra-ui/react'
 import type { GetServerSideProps, NextPage } from "next";
-import { Box } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import { fetchStoreData } from "../../api/stores";
+import { GlobalStoreData } from "../../types/GlobalStorePage";
+import GlobalStorePage from "../../components/globalStore";
 
-interface StorePageProps {
-  storeData: any | null;
-}
-
-const StorePage: NextPage<StorePageProps> = ({ storeData }) => {
-  const router = useRouter();
-
-  const { storeId } = router.query;
-
-  console.log(storeData);
-
+const StorePage: NextPage<GlobalStoreData> = ({ storeData }) => {
   return (
-    <Box>
-      Hello there {storeId} {JSON.stringify(storeData)}
+    <Box bg="black" h="full" overflowY="auto">
+      <GlobalStorePage storeData={storeData} />
     </Box>
   );
 };

@@ -1,0 +1,62 @@
+import { Box, HStack, Text, Image, Center } from "@chakra-ui/react";
+import { Food } from "../../types/Food";
+
+interface StoreFeaturedFoodProps {
+  featuredFood: Food[];
+}
+
+const StoreFeaturedFood = ({ featuredFood }: StoreFeaturedFoodProps) => {
+  return (
+    <Box>
+      <Text color="gray.600" fontWeight="bold" mb="10px">
+        Featured
+      </Text>
+      <Box overflowX="auto" h="170px" my="30px">
+        <HStack gap="4" h="full" px="10px">
+          {featuredFood.map((food) => (
+            <FeaturedFoodCard food={food} />
+          ))}
+        </HStack>
+      </Box>
+    </Box>
+  );
+};
+
+export default StoreFeaturedFood;
+
+const FeaturedFoodCard = ({ food }: { food: Food }) => {
+  return (
+    <Box
+      minW="200px"
+      w="200px"
+      h="100px"
+      border="1px"
+      borderColor="gray.100"
+      borderRadius="md"
+      shadow="sm"
+      position="relative"
+    >
+      <Box position="absolute" top="-50px" left="0px" w="full">
+        <Center w="full">
+          <Box
+            w="100px"
+            h="100px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            overflow="hidden"
+            borderRadius="full"
+          >
+            <Image
+              objectFit="cover"
+              minW="full"
+              minH="full"
+              src={food.image ? food.image : "/images/food-generic.jpg"}
+            />
+          </Box>
+        </Center>
+      </Box>
+      {food.name}
+    </Box>
+  );
+};
