@@ -14,11 +14,15 @@ import {
 import { Food } from "../../types/Food";
 import { supabase } from "../../api/supabase-client";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { openConfirmDialog } from "../../features/modals/modal-slice";
+import {
+  openConfirmDialog,
+  openPreview,
+} from "../../features/modals/modal-slice";
 import { HiOutlinePlus } from "react-icons/hi";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { MdFastfood } from "react-icons/md";
 import FoodItemDrawer from "../../components/foods/FoodItemDrawer";
+import { FiEye } from "react-icons/fi";
 
 const FoodItems = () => {
   const { selectedCategory, selectedStore } = useAppSelector(
@@ -36,7 +40,6 @@ const FoodItems = () => {
   /* FOODS STATE END*/
 
   async function fetchAndSetFoods(categoryId: number) {
-    console.log(4444);
     if (!user?.id) return;
     try {
       setLoadingFoods(true);
@@ -105,6 +108,15 @@ const FoodItems = () => {
             Food List
           </Text>
           <Spacer />
+          <Button
+            onClick={() => dispatch(openPreview(selectedStore))}
+            size="sm"
+            disabled={selectedStore === ""}
+            colorScheme="twitter"
+            fontSize="xl"
+          >
+            <FiEye />
+          </Button>
           <Button
             onClick={() => {
               setFoodItemToEdit("");

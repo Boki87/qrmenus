@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import { supabase } from "../../api/supabase-client";
 import AppLayout from "../../components/AppLayout";
 import AppContainer from "../../components/Container";
-import { Grid, GridItem, HStack, Select, Box } from "@chakra-ui/react";
+import { Grid, GridItem, HStack, Select } from "@chakra-ui/react";
 import FoodCategories from "../../components/foods/FoodCategories";
 import { fetchCategoriesForStore } from "../../api/foods";
 import { fetchStoresForUser } from "../../api/stores";
@@ -30,7 +30,7 @@ interface FoodsPageProps {
 const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
   const dispatch = useAppDispatch();
 
-  const { selectedStore, selectedCategory, categoryToEdit } = useAppSelector(
+  const { selectedStore, categoryToEdit } = useAppSelector(
     (state) => state.food
   );
 

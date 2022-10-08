@@ -6,8 +6,14 @@ import {
   VStack,
   Alert,
   AlertIcon,
+  Spacer,
+  HStack,
+  IconButton,
 } from "@chakra-ui/react";
 import { Store } from "../../types/Store";
+import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
+import {IoLocationOutline} from "react-icons/io5"
+import {BsCalendarDate} from 'react-icons/bs'
 
 const StoreHero = (props: Store) => {
   const { cover, name, description, announcement } = props;
@@ -63,6 +69,29 @@ const StoreHero = (props: Store) => {
             {description}
           </Text>
         </Center>
+        <Spacer />
+        <HStack>
+          <IconButton
+            aria-label="email"
+            colorScheme="blackAlpha"
+            icon={<AiOutlineMail />}
+          />
+          <IconButton
+            aria-label="phone"
+            colorScheme="blackAlpha"
+            icon={<AiOutlinePhone />}
+          />
+          <IconButton
+            aria-label="adress"
+            colorScheme="blackAlpha"
+            icon={<IoLocationOutline />}
+          />
+          <IconButton
+            aria-label="info"
+            colorScheme="blackAlpha"
+            icon={<BsCalendarDate />}
+          />
+        </HStack>
       </VStack>
     </Box>
   );
