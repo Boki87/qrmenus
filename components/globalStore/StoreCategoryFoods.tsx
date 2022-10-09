@@ -13,11 +13,13 @@ import { MdFastfood, MdNoFood } from "react-icons/md";
 interface StoreCategoryFoodsProps {
   foods: Food[];
   activeCategoryName: string;
+  onViewFood: (data: Food) => void;
 }
 
 const StoreCategoryFoods = ({
   foods,
   activeCategoryName,
+  onViewFood,
 }: StoreCategoryFoodsProps) => {
   return (
     <Box>
@@ -41,6 +43,7 @@ const StoreCategoryFoods = ({
               size={food.size}
               size_unit={food.size_unit}
               key={food.id}
+              onViewFood={() => onViewFood(food)}
             />
           ))}
         {foods.length === 0 && (
@@ -62,6 +65,7 @@ const StoreCategoryFoodItem = ({
   currency,
   size,
   size_unit,
+  onViewFood,
 }: {
   image?: string;
   name?: string;
@@ -69,9 +73,10 @@ const StoreCategoryFoodItem = ({
   currency?: string;
   size?: number;
   size_unit?: string;
+  onViewFood: () => void;
 }) => {
   return (
-    <HStack h="120px" minH="120px" w="full" color="black">
+    <HStack onClick={onViewFood} h="120px" minH="120px" w="full" color="black">
       <Box
         position="relative"
         display="flex"
@@ -93,7 +98,13 @@ const StoreCategoryFoodItem = ({
           color="gray.700"
         >
           {image ? (
-            <Image src={image} minW="full" minH="full" objectFit="cover" />
+            <Image
+              cursor="pointer"
+              src={image}
+              minW="full"
+              minH="full"
+              objectFit="cover"
+            />
           ) : (
             <MdFastfood />
           )}
@@ -101,7 +112,7 @@ const StoreCategoryFoodItem = ({
       </Box>
       <VStack flex={1} maxW="250px" alignItems="flex-start">
         <Box>
-          <Text fontWeight="bold">{name}</Text>
+          <Text fontWeight="bold" cursor="pointer">{name}</Text>
         </Box>
         <HStack>
           <Button size="sm" borderRadius="full">

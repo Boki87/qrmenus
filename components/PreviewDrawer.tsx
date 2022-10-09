@@ -21,7 +21,6 @@ import { fetchStoreData } from "../api/stores";
 import GlobalStore from "./globalStore";
 
 const PreviewDrawer = () => {
-  console.log("preview");
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [storeData, setStoreData] = useState(null);

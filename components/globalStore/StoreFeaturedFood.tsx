@@ -11,12 +11,22 @@ import { Food } from "../../types/Food";
 
 interface StoreFeaturedFoodProps {
   featuredFood: Food[];
+  onViewFood: (data: Food) => void;
 }
 
-const StoreFeaturedFood = ({ featuredFood }: StoreFeaturedFoodProps) => {
+const StoreFeaturedFood = ({
+  featuredFood,
+  onViewFood,
+}: StoreFeaturedFoodProps) => {
   return (
     <Box>
-      <Text color="gray.700" ml="10px" fontWeight="bold" fontSize="xl" mb="-40px">
+      <Text
+        color="gray.700"
+        ml="10px"
+        fontWeight="bold"
+        fontSize="xl"
+        mb="-40px"
+      >
         Featured
       </Text>
       <Box
@@ -28,7 +38,11 @@ const StoreFeaturedFood = ({ featuredFood }: StoreFeaturedFoodProps) => {
       >
         <HStack gap="4" px="10px" alignItems="center" mt="50px">
           {featuredFood.map((food) => (
-            <FeaturedFoodCard food={food} key={food.id}/>
+            <FeaturedFoodCard
+              food={food}
+              onViewFood={() => onViewFood(food)}
+              key={food.id}
+            />
           ))}
         </HStack>
       </Box>
@@ -38,9 +52,17 @@ const StoreFeaturedFood = ({ featuredFood }: StoreFeaturedFoodProps) => {
 
 export default StoreFeaturedFood;
 
-const FeaturedFoodCard = ({ food }: { food: Food }) => {
+const FeaturedFoodCard = ({
+  food,
+  onViewFood,
+}: {
+  food: Food;
+  onViewFood: (data: Food) => void;
+}) => {
   return (
     <Box
+      onClick={() => onViewFood(food)}
+      cursor="pointer"
       minW="200px"
       w="200px"
       h="100px"
