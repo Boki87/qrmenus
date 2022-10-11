@@ -70,7 +70,6 @@ const AvatarUpload = () => {
         setIsLoading(false);
         return;
       }
-      console.log(avatarUrl);
       const { data, error } = await supabase.storage
         .from("public")
         .remove([avatarUrl]);
@@ -88,7 +87,7 @@ const AvatarUpload = () => {
         throw updateError;
       }
 
-      dispatch(setUser({ ...user, avatar: undefined }));
+      dispatch(setUser({ ...user, avatar: "" }));
     } catch (e) {
       setIsLoading(false);
       console.log(e);
