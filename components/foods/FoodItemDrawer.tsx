@@ -385,8 +385,8 @@ const FoodItemDrawer = ({
                         onInput={updateFormData}
                         flex={4}
                       />
-                      <InputRightAddon children="min" />
-                    </InputGroup>
+                      <InputRightAddon>min</InputRightAddon>
+                      </InputGroup>
                   </HStack>
                 </FormControl>
                 <FormControl

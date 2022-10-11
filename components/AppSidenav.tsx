@@ -38,13 +38,15 @@ const buttons = [
 
 const AppSidenav = () => {
   const router = useRouter();
+    const bgColor = useColorModeValue("gray.50", "gray.700")
+    const borderColor = useColorModeValue("gray.200", "whiteAlpha.200")
   return (
     <Box
       minW={{ base: "50px", md: "200px" }}
       h="full"
-      bg={useColorModeValue("gray.50", "gray.700")}
+      bg={bgColor}
       borderRight="1px"
-      borderColor={useColorModeValue("gray.200", "whiteAlpha.200")}
+      borderColor={borderColor}
     >
       {buttons.map((btn) => (
         <NavBtn
@@ -76,6 +78,7 @@ const NavBtn = ({
   const router = useRouter();
 
     const color = active ? useColorModeValue("gray.200", "gray.600") : "inherit"
+    const hoverBg = useColorModeValue("gray.200", "gray.600")
 
   return (
     <HStack
@@ -89,7 +92,7 @@ const NavBtn = ({
       textTransform="capitalize"
       justifyContent={{ base: "center", md: "flex-start" }}
       bg={color}
-      _hover={{ bg: useColorModeValue("gray.200", "gray.600") }}
+      _hover={{ bg: hoverBg }}
     >
       {icon}
       <Text display={{ base: "none", md: "inline" }}>{title}</Text>
