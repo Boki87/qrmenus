@@ -38,8 +38,8 @@ const buttons = [
 
 const AppSidenav = () => {
   const router = useRouter();
-    const bgColor = useColorModeValue("gray.50", "gray.700")
-    const borderColor = useColorModeValue("gray.200", "whiteAlpha.200")
+  const bgColor = useColorModeValue("gray.50", "gray.700");
+  const borderColor = useColorModeValue("gray.200", "whiteAlpha.200");
   return (
     <Box
       minW={{ base: "50px", md: "200px" }}
@@ -77,8 +77,11 @@ const NavBtn = ({
   const active = href === path;
   const router = useRouter();
 
-    const color = active ? useColorModeValue("gray.200", "gray.600") : "inherit"
-    const hoverBg = useColorModeValue("gray.200", "gray.600")
+  let color = useColorModeValue("gray.200", "gray.600");
+  if (!active) {
+    color = "inherit";
+  }
+  const hoverBg = useColorModeValue("gray.200", "gray.600");
 
   return (
     <HStack
