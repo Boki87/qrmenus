@@ -82,7 +82,7 @@ const FoodItemDrawer = ({
 
     setFoodItemData({
       id: "",
-      user_id: user.id,
+      user_id: user.id || "",
       store_id: storeId,
       food_category_id: categoryId,
       name: "",
