@@ -52,6 +52,8 @@ const FoodItemDrawer = ({
   const [isUpdating, setIsUpdating] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
+  const color = useColorModeValue("gray.50", "gray.600");
+
   const { uploadFile, isUploading, errorUploading, publicUrl } =
     useUploadFileHook();
 
@@ -391,7 +393,7 @@ const FoodItemDrawer = ({
                   display="flex"
                   alignItems="center"
                   mb="20px"
-                  bg={useColorModeValue("gray.50", "gray.600")}
+                  bg={color}
                   h="40px"
                   px="10px"
                 >
@@ -413,7 +415,7 @@ const FoodItemDrawer = ({
                   display="flex"
                   alignItems="center"
                   mb="20px"
-                  bg={useColorModeValue("gray.50", "gray.600")}
+                  bg={color}
                   h="40px"
                   px="10px"
                 >

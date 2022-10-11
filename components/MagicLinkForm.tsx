@@ -57,11 +57,9 @@ const MagicLinkForm = () => {
           </Text>
         </FormLabel>
         <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            color="gray.400"
-            children={<MdOutlineAlternateEmail />}
-          />
+          <InputLeftElement pointerEvents="none" color="gray.400">
+            <MdOutlineAlternateEmail />
+          </InputLeftElement>
           <Input type="email" required onInput={updateEmailHandler} />
         </InputGroup>
       </FormControl>

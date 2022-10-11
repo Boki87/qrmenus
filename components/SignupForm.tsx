@@ -1,6 +1,6 @@
 import { SyntheticEvent, useState } from "react";
 import { signupUser } from "../api/user";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
 import {
   Button,
   Center,
@@ -12,7 +12,7 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import {
   MdOutlineAlternateEmail,
@@ -21,10 +21,10 @@ import {
 } from "react-icons/md";
 
 const SignupForm = () => {
-    const router = useRouter()
-    const toast = useToast()
+  const router = useRouter();
+  const toast = useToast();
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const [formObj, setFormObj] = useState({
     name: "",
@@ -40,27 +40,32 @@ const SignupForm = () => {
   async function submitHandler(e: SyntheticEvent) {
     e.preventDefault();
     try {
-        setLoading(true)
-        let newUser = await signupUser(formObj.name, formObj.email, formObj.password)  
-        router.push('/auth/signin')        
-        setLoading(false)
-        toast({
-            status: 'success',
-            description: 'You have successfully registerd an account.',
-            duration: 4000,
-            isClosable: true,
-            position: 'top'
-        })
-    }catch(e){
-        setLoading(false)
-        toast({
-            status: 'error',
-            description: 'Error registering your account. Plesae refresh the page and try again.',
-            duration: 4000,
-            isClosable: true,
-            position: 'top'
-        })
-        console.log(e)
+      setLoading(true);
+      let newUser = await signupUser(
+        formObj.name,
+        formObj.email,
+        formObj.password
+      );
+      router.push("/auth/signin");
+      setLoading(false);
+      toast({
+        status: "success",
+        description: "You have successfully registerd an account.",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+    } catch (e) {
+      setLoading(false);
+      toast({
+        status: "error",
+        description:
+          "Error registering your account. Plesae refresh the page and try again.",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+      console.log(e);
     }
   }
 
@@ -73,11 +78,10 @@ const SignupForm = () => {
           </Text>
         </FormLabel>
         <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            color="gray.400"
-            children={<MdPersonOutline />}
-          />
+          <InputLeftElement pointerEvents="none" color="gray.400">
+            {" "}
+            <MdPersonOutline />
+          </InputLeftElement>
           <Input type="text" name="name" onInput={updateFormObj} required />
         </InputGroup>
       </FormControl>
@@ -91,9 +95,10 @@ const SignupForm = () => {
           <InputLeftElement
             pointerEvents="none"
             color="gray.400"
-            children={<MdOutlineAlternateEmail />}
             onInput={updateFormObj}
-          />
+          >
+            <MdOutlineAlternateEmail />
+          </InputLeftElement>
           <Input type="email" name="email" onInput={updateFormObj} required />
         </InputGroup>
       </FormControl>
@@ -104,11 +109,10 @@ const SignupForm = () => {
           </Text>
         </FormLabel>
         <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            color="gray.400"
-            children={<MdLock />}
-          />
+          <InputLeftElement pointerEvents="none" color="gray.400">
+            {" "}
+            <MdLock />
+          </InputLeftElement>
           <Input
             type={showPassword ? "text" : "password"}
             required

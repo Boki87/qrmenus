@@ -44,11 +44,11 @@ const Signin: NextPage = () => {
         flexDirection="column"
         justifyContent="center"
       >
-          <NextLink href="/">
-            <Box mb="20px" cursor="pointer">
-              <AppLogo />
-            </Box>
-          </NextLink>
+        <NextLink href="/">
+          <Box mb="20px" cursor="pointer">
+            <AppLogo />
+          </Box>
+        </NextLink>
 
         <Text
           as="h1"
@@ -59,7 +59,7 @@ const Signin: NextPage = () => {
           Welcome back
         </Text>
         <Text as="p" color={useColorModeValue("gray.600", "gray.300")}>
-          Welcome back to myapp. Enter your credentials to sign in. Don't have
+          Welcome back to myapp. Enter your credentials to sign in. Don{'&apos'}t have
           an account yet?{" "}
           <NextLink href="/auth/signup">
             <Link

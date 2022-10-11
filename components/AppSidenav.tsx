@@ -75,6 +75,8 @@ const NavBtn = ({
   const active = href === path;
   const router = useRouter();
 
+    const color = active ? useColorModeValue("gray.200", "gray.600") : "inherit"
+
   return (
     <HStack
       onClick={() => router.push(href)}
@@ -86,7 +88,7 @@ const NavBtn = ({
       fontSize="xl"
       textTransform="capitalize"
       justifyContent={{ base: "center", md: "flex-start" }}
-      bg={active ? useColorModeValue("gray.200", "gray.600") : "inherit"}
+      bg={color}
       _hover={{ bg: useColorModeValue("gray.200", "gray.600") }}
     >
       {icon}
