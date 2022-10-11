@@ -30,7 +30,7 @@ const StoreCard = ({
 
   function openQrCode() {
     window.open(
-      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://192.168.0.105:3000/store/${store.id}`,
+      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://localhost:3000/store/${store.id}`,
       "_blank"
     );
   }

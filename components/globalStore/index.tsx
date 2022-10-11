@@ -63,6 +63,9 @@ const GlobalStorePage = ({ storeData }: GlobalStoreData) => {
           name={storeData.name}
           description={storeData.description}
           announcement={storeData.announcement}
+          phone={storeData.phone}
+          address={storeData.address}
+          working_hours={storeData.working_hours}
         />
         <StoreCategories
           onSetActive={(val) => {

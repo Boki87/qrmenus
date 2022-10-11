@@ -12,11 +12,21 @@ import {
 } from "@chakra-ui/react";
 import { Store } from "../../types/Store";
 import { AiOutlineMail, AiOutlinePhone } from "react-icons/ai";
-import {IoLocationOutline} from "react-icons/io5"
-import {BsCalendarDate} from 'react-icons/bs'
+import { IoLocationOutline } from "react-icons/io5";
+import { BsCalendarDate } from "react-icons/bs";
 
 const StoreHero = (props: Store) => {
-  const { cover, name, description, announcement } = props;
+  const {
+    cover,
+    name,
+    description,
+    announcement,
+    email,
+    phone,
+    working_hours,
+    address,
+  } = props;
+
 
   return (
     <Box
@@ -71,26 +81,34 @@ const StoreHero = (props: Store) => {
         </Center>
         <Spacer />
         <HStack>
-          <IconButton
-            aria-label="email"
-            colorScheme="blackAlpha"
-            icon={<AiOutlineMail />}
-          />
-          <IconButton
-            aria-label="phone"
-            colorScheme="blackAlpha"
-            icon={<AiOutlinePhone />}
-          />
-          <IconButton
-            aria-label="adress"
-            colorScheme="blackAlpha"
-            icon={<IoLocationOutline />}
-          />
-          <IconButton
-            aria-label="info"
-            colorScheme="blackAlpha"
-            icon={<BsCalendarDate />}
-          />
+          {email && email !== "" && (
+            <IconButton
+              aria-label="email"
+              colorScheme="blackAlpha"
+              icon={<AiOutlineMail />}
+            />
+          )}
+          {phone && phone !== "" && (
+            <IconButton
+              aria-label="phone"
+              colorScheme="blackAlpha"
+              icon={<AiOutlinePhone />}
+            />
+          )}
+          {address && address !== "" && (
+            <IconButton
+              aria-label="adress"
+              colorScheme="blackAlpha"
+              icon={<IoLocationOutline />}
+            />
+          )}
+          {working_hours && working_hours !== "" && (
+            <IconButton
+              aria-label="info"
+              colorScheme="blackAlpha"
+              icon={<BsCalendarDate />}
+            />
+          )}
         </HStack>
       </VStack>
     </Box>
