@@ -57,7 +57,7 @@ async function getUserProfileFromSession(user: User): Promise<UserProfile | unde
 
 
 async function signinUser(email:string, password:string) {
-    let {user, error, session} = await supabase.auth.signIn({email, password})
+    let {user, error} = await supabase.auth.signIn({email, password})
     if(!user || error) {
         throw new Error(error?.message)
     }

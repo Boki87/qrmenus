@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../../api/supabase-client";
+import type { GetServerSideProps, GetServerSideProps } from "next";
 import { createUserProfileFromGoogle } from "../../api/user";
 import { Box, Spinner } from "@chakra-ui/react";
 import { useAppDispatch } from "../../app/hooks";
@@ -24,15 +25,28 @@ const Callbacks = () => {
     }
   }
 
+  async function checkForAuthHash() {
+    const session = supabase.auth.session();
+    await fetch("/api/auth", {
+      method: "POST",
+      body: JSON.stringify({ event: "SIGNED_IN", session }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (session?.user) {
+      setupUser(session.user);
+    } else {
+      router.push("/auth/signin");
+    }
+  }
+
   useEffect(() => {
+    if (window.location.hash.includes("access_token")) {
+      checkForAuthHash();
+    }
     window.addEventListener("hashchange", () => {
-      const user = supabase.auth.user();
-      //console.log(session)
-      if (user) {
-        setupUser(user);
-      } else {
-        router.push("/auth/signin");
-      }
+      checkForAuthHash();
     });
 
     return () => window.removeEventListener("hashchange", () => {});
@@ -52,3 +66,12 @@ const Callbacks = () => {
 };
 
 export default Callbacks;
+
+/*export const getServerSideProps: GetServerSideProps = async (context) => {
+
+    const {access_token} = context.query
+
+  return {
+    props: {},
+  };
+};*/

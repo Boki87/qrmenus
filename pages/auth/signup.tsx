@@ -27,7 +27,7 @@ const Signup: NextPage = () => {
       {
         provider: "google",
       },
-      { redirectTo: `${APP_URL}/auth/callbacks` }
+      { redirectTo: `${APP_URL}/auth/callbacks/` }
     );
     //console.log(user, session, error)
   }

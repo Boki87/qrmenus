@@ -30,7 +30,7 @@ const Signin: NextPage = () => {
       {
         provider: "google",
       },
-      { redirectTo: `${APP_URL}/auth/callbacks` }
+      { redirectTo: `${APP_URL}/auth/callbacks/` }
     );
   }
 
