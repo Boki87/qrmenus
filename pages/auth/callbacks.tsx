@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { supabase } from "../../api/supabase-client";
-import type { GetServerSideProps, GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import { createUserProfileFromGoogle } from "../../api/user";
 import { Box, Spinner } from "@chakra-ui/react";
 import { useAppDispatch } from "../../app/hooks";
