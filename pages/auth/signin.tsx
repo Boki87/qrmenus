@@ -15,6 +15,7 @@ import {
   Divider,
   Spacer,
 } from "@chakra-ui/react";
+import {APP_URL} from '../../api/supabase-client'
 import AuthLayout from "../../components/AuthLayout";
 import MagicLinkForm from "../../components/MagicLinkForm";
 import { BsArrowRight } from "react-icons/bs";
@@ -29,9 +30,8 @@ const Signin: NextPage = () => {
       {
         provider: "google",
       },
-      { redirectTo: "http://localhost:3000/auth/callbacks" }
+      { redirectTo: `${APP_URL}/auth/callbacks` }
     );
-    //console.log(user, session, error)
   }
 
   return (
