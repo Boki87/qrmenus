@@ -20,8 +20,6 @@ import AppLogo from "../../components/AppLogo";
 
 const Signup: NextPage = () => {
   async function googleLogin() {
-    console.log(APP_URL);
-    return;
     const { user, session, error } = await supabase.auth.signIn(
       {
         provider: "google",
