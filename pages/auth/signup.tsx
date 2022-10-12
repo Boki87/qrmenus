@@ -10,19 +10,18 @@ import {
   Divider,
   Spacer,
 } from "@chakra-ui/react";
-import {APP_URL} from '../../api/supabase-client'
+import { APP_URL } from "../../api/supabase-client";
 import AuthLayout from "../../components/AuthLayout";
-import {supabase} from '../../api/supabase-client'
+import { supabase } from "../../api/supabase-client";
 import { BsArrowRight } from "react-icons/bs";
 import ThemeToggleButton from "../../components/ThemeToggleButton";
 import SignupForm from "../../components/SignupForm";
 import AppLogo from "../../components/AppLogo";
 
 const Signup: NextPage = () => {
-
-
-
   async function googleLogin() {
+    console.log(APP_URL);
+    return;
     const { user, session, error } = await supabase.auth.signIn(
       {
         provider: "google",
@@ -31,8 +30,6 @@ const Signup: NextPage = () => {
     );
     //console.log(user, session, error)
   }
-
-
 
   return (
     <AuthLayout>
@@ -44,11 +41,11 @@ const Signup: NextPage = () => {
         flexDirection="column"
         justifyContent="center"
       >
-          <NextLink href="/">
-            <Box mb="20px" cursor="pointer">
-              <AppLogo />
-            </Box>
-          </NextLink>
+        <NextLink href="/">
+          <Box mb="20px" cursor="pointer">
+            <AppLogo />
+          </Box>
+        </NextLink>
 
         <Text
           as="h1"
@@ -89,7 +86,12 @@ const Signup: NextPage = () => {
           Or continue with
         </Text>
         <HStack>
-          <Button onClick={googleLogin} borderRadius="full" colorScheme="blue" flex="1">
+          <Button
+            onClick={googleLogin}
+            borderRadius="full"
+            colorScheme="blue"
+            flex="1"
+          >
             Google
           </Button>
         </HStack>
