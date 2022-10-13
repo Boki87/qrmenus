@@ -56,7 +56,7 @@ const GlobalStorePage = ({ storeData }: GlobalStoreData) => {
         overflowX="auto"
         borderRadius="xl"
         bg="white"
-        pb="30px"
+        pb="100px"
       >
         <StoreHero
           cover={storeData.cover}

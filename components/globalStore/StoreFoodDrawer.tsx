@@ -38,7 +38,7 @@ const StoreFoodDrawer = ({isOpen, onClose, foodData}: StoreFoodDrawerProps) => {
       <DrawerContent borderLeftRadius="md">
         <DrawerCloseButton onClick={onClose} />
         <DrawerHeader borderBottomWidth="1px">Preview</DrawerHeader>
-        <DrawerBody p="0px" overflowY="auto">
+        <DrawerBody p="0px" pb="60px" overflowY="auto">
                     {JSON.stringify(foodData)}
         </DrawerBody>
       </DrawerContent>

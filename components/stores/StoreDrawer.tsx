@@ -363,7 +363,7 @@ const StoreDrawer = ({
               </Center>
             )}
           </DrawerBody>
-          <DrawerFooter borderTopWidth="1px">
+          <DrawerFooter borderTopWidth="1px" mb="60px">
             <Center w="full" gap="10px">
               <Button isLoading={isUpdating} type="submit" colorScheme="blue">
                 {storeId !== "" ? "Update" : "Save"}
