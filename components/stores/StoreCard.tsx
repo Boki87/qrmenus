@@ -16,6 +16,7 @@ import { ImQrcode } from "react-icons/im";
 import { AiFillDelete } from "react-icons/ai";
 import { useAppDispatch } from "../../app/hooks";
 import { openPreview } from "../../features/modals/modal-slice";
+import {APP_URL} from '../../api/supabase-client'
 
 const StoreCard = ({
   store,
@@ -30,7 +31,7 @@ const StoreCard = ({
 
   function openQrCode() {
     window.open(
-      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://localhost:3000/store/${store.id}`,
+      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${APP_URL}/store/${store.id}`,
       "_blank"
     );
   }

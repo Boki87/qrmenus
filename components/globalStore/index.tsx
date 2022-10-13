@@ -64,6 +64,7 @@ const GlobalStorePage = ({ storeData }: GlobalStoreData) => {
           description={storeData.description}
           announcement={storeData.announcement}
           phone={storeData.phone}
+          email={storeData.email}
           address={storeData.address}
           working_hours={storeData.working_hours}
         />

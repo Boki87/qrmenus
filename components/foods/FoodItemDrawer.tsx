@@ -478,7 +478,7 @@ const FoodItemDrawer = ({
               </Center>
             )}
           </DrawerBody>
-          <DrawerFooter borderTopWidth="1px" mb="120px">
+          <DrawerFooter borderTopWidth="1px" mb={{base:'120px',md: '0px'}}>
             <Center w="full" gap="10px">
               <Button isLoading={isUpdating} type="submit" colorScheme="blue">
                 {foodItemId !== "" ? "Update" : "Save"}
