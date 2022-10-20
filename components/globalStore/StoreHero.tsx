@@ -105,11 +105,13 @@ const StoreHero = (props: Store) => {
               </a>
             )}
             {address && address !== "" && (
-              <IconButton
-                aria-label="adress"
-                colorScheme="blackAlpha"
-                icon={<IoLocationOutline />}
-              />
+              <a href={`http://maps.google.co.in/maps?q=${address}`} target="_blank">
+                <IconButton
+                  aria-label="adress"
+                  colorScheme="blackAlpha"
+                  icon={<IoLocationOutline />}
+                />
+              </a>
             )}
             {working_hours && working_hours !== "" && (
               <IconButton

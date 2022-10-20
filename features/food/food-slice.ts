@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Store } from "../../types/Store";
 import { UserProfile } from "../../types/UserProfile";
 
 interface UserState {
-  selectedStore: string;
+  selectedStore: Store | null;
   selectedCategory: number;
   categoryToEdit: number;
 }
 
 const initialState: UserState = {
   selectedCategory: -1,
-  selectedStore: "",
+  selectedStore: null,
   categoryToEdit: -1,
 };
 
@@ -17,7 +18,7 @@ const userSlice = createSlice({
   name: "food",
   initialState,
   reducers: {
-    setSelectedStore(state, action: PayloadAction<string>) {
+    setSelectedStore(state, action: PayloadAction<Store | null>) {
       state.selectedStore = action.payload;
     },
     setSelectedCategory(state, action: PayloadAction<number>) {

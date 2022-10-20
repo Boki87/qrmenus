@@ -39,7 +39,7 @@ const FoodItems = () => {
   const [isFoodItemDrawerOpen, setIsFoodDrawerOpen] = useState(false);
   /* FOODS STATE END*/
 
-  async function fetchAndSetFoods(categoryId: number) {
+  async function fetchAndSetFoods() {
     if (!user?.id) return;
     try {
       setLoadingFoods(true);
@@ -59,7 +59,7 @@ const FoodItems = () => {
   }
 
   async function refetchFoodList() {
-    await fetchAndSetFoods(selectedCategory);
+    await fetchAndSetFoods();
   }
 
   async function onDeleteHandler(id: string) {
@@ -89,7 +89,7 @@ const FoodItems = () => {
 
   useEffect(() => {
     if (selectedCategory !== -1) {
-      fetchAndSetFoods(selectedCategory);
+      fetchAndSetFoods();
     }
   }, [selectedCategory]);
 
@@ -109,9 +109,13 @@ const FoodItems = () => {
           </Text>
           <Spacer />
           <Button
-            onClick={() => dispatch(openPreview(selectedStore))}
+            onClick={() => {
+              if (selectedStore?.id) {
+                dispatch(openPreview(selectedStore?.id));
+              }
+            }}
             size="sm"
-            disabled={selectedStore === ""}
+            disabled={selectedStore?.id === ""}
             colorScheme="twitter"
             fontSize="xl"
           >
@@ -203,6 +207,10 @@ interface FoodItemPros {
 }
 
 const FoodItem = ({ foodItemData, onEdit, onDelete }: FoodItemPros) => {
+
+  const {selectedStore} = useAppSelector(state => state.food)
+
+
   return (
     <HStack
       mb="10px"
@@ -244,7 +252,7 @@ const FoodItem = ({ foodItemData, onEdit, onDelete }: FoodItemPros) => {
         noOfLines={1}
         display={{ base: "none", md: "-webkit-box" }}
       >
-        {foodItemData.price} {foodItemData.currency}
+        {foodItemData.price} {selectedStore?.currency}
       </Text>
       <HStack>
         <Button onClick={() => onEdit(foodItemData.id)}>

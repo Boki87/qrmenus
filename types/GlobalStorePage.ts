@@ -7,4 +7,5 @@ export type GlobalStoreData = {
     food_categories: FoodCategory[];
     foods: Food[];
   };
+  isInDevMode: boolean;
 };

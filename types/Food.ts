@@ -7,7 +7,7 @@ export type Food = {
   image?: string;
   description?: string;
   comment?: string;
-  price?: number;
+  price: number;
   currency?: string;
   is_live?: boolean;
   is_featured?: boolean;

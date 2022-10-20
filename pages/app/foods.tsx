@@ -74,7 +74,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
 
   async function storeSelectHandler(e: SyntheticEvent) {
     let { value: selectedValue } = e.target as HTMLSelectElement;
-    dispatch(setSelectedStore(selectedValue));
+    dispatch(setSelectedStore(stores.filter(s => s.id === selectedValue)[0]));
     dispatch(setSelectedCategory(-1));
     if (selectedValue) {
       try {
@@ -127,7 +127,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
   );
 
   useEffect(() => {
-    dispatch(setSelectedStore(""));
+    dispatch(setSelectedStore(null));
     dispatch(setSelectedCategory(-1));
   }, []);
 

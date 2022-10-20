@@ -17,11 +17,12 @@ import {
 import { supabase } from "../../api/supabase-client";
 import { useAppSelector } from "../../app/hooks";
 import { FoodCategory } from "../../types/FoodCategory";
+import { Store } from "../../types/Store";
 
 interface FoodCategoryModalProps {
   isOpen: boolean;
   onClose: () => void;
-  selectedStore: string;
+  selectedStore: Store | null;
   categoryToEdit: number;
   categories: FoodCategory[] | [];
   onAdded: (category: FoodCategory) => void;
@@ -53,9 +54,13 @@ const FoodCategoryModal = ({
       return;
     }
     if (categoryToEdit === -1) {
-      await addNewHandler(selectedStore, user.id);
+      if (selectedStore?.id) {
+        await addNewHandler(selectedStore.id, user.id);
+      }
     } else {
-      await updateHandler(selectedStore, user.id, categoryToEdit);
+      if (selectedStore?.id) {
+        await updateHandler(selectedStore.id, user.id, categoryToEdit);
+      }
     }
   }
 

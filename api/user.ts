@@ -8,7 +8,6 @@ async function signupUser(name: string, email: string, password: string):Promise
     let {user, session, error} = await supabase.auth.signUp({email, password})
     if(error || !user) {
         throw new Error('error registering...')
-        return
     } 
 
     //insert row in profiles table
@@ -19,7 +18,6 @@ async function signupUser(name: string, email: string, password: string):Promise
 
       if(!profileData || profileError)  {
         throw new Error('Error registering...')
-        return
       }
 
      return {

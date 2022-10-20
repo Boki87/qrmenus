@@ -7,7 +7,7 @@ import GlobalStorePage from "../../components/globalStore";
 const StorePage: NextPage<GlobalStoreData> = ({ storeData }) => {
   return (
     <Box bg="black" h="full" overflow="auto">
-      <GlobalStorePage storeData={storeData} />
+      <GlobalStorePage storeData={storeData} isInDevMode={false} />
     </Box>
   );
 };

@@ -1,6 +1,6 @@
 export type Store = {
-  id?: string;
-  user_id?: string;
+  id: string;
+  user_id: string;
   name?: string;
   email?: string;
   description?: string;
@@ -9,5 +9,6 @@ export type Store = {
   address?: string;
   phone?: string;
   cover?: string;
+  currency?: string;
   created_at?: string;
 };

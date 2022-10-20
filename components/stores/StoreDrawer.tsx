@@ -58,6 +58,7 @@ const StoreDrawer = ({
     working_hours: "",
     address: "",
     phone: "",
+    currency: "",
   });
 
   function resetStoreData() {
@@ -72,6 +73,7 @@ const StoreDrawer = ({
       working_hours: "",
       address: "",
       phone: "",
+      currency: "",
     });
   }
 
@@ -238,7 +240,12 @@ const StoreDrawer = ({
   }, [isOpen]);
 
   return (
-    <Drawer isOpen={isOpen} onClose={onClose} placement={'right'} size={{base: 'full', md:'md'}}>
+    <Drawer
+      isOpen={isOpen}
+      onClose={onClose}
+      placement={"right"}
+      size={{ base: "full", md: "md" }}
+    >
       <DrawerOverlay />
       <form onSubmit={submitHandler}>
         <DrawerContent borderLeftRadius="md">
@@ -321,6 +328,15 @@ const StoreDrawer = ({
                     onInput={updateFormData}
                   />
                 </FormControl>
+                <FormControl mb="20px">
+                  <FormLabel>Menu Currency</FormLabel>
+                  <Input
+                    placeholder="EUR, USD..."
+                    name="currency"
+                    value={storeData.currency}
+                    onInput={updateFormData}
+                  />
+                </FormControl>
                 <VStack>
                   <Image
                     src={storeData.cover || "/images/undraw/image.svg"}
@@ -363,12 +379,12 @@ const StoreDrawer = ({
               </Center>
             )}
           </DrawerBody>
-          <DrawerFooter borderTopWidth="1px" mb={{base:'120px',md: '0px'}}>
+          <DrawerFooter borderTopWidth="1px" mb={{ base: "120px", md: "0px" }}>
             <Center w="full" gap="10px">
               <Button isLoading={isUpdating} type="submit" colorScheme="blue">
                 {storeId !== "" ? "Update" : "Save"}
               </Button>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button onClick={onClose}>Close</Button>
             </Center>
           </DrawerFooter>
         </DrawerContent>

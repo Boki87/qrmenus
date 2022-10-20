@@ -45,7 +45,7 @@ const FoodItemDrawer = ({
   onClose,
   onRefetchFoodList,
 }: FoodItemDrawerProps) => {
-  const { selectedStore: storeId, selectedCategory: categoryId } =
+  const { selectedStore, selectedCategory: categoryId } =
     useAppSelector((state) => state.food);
   const user = useAppSelector((state) => state.user.user);
   const [isLoading, setIsLoading] = useState(false);
@@ -79,11 +79,12 @@ const FoodItemDrawer = ({
 
   function resetStoreData() {
     if (!user) return;
+    if(!selectedStore) return
 
     setFoodItemData({
       id: "",
       user_id: user.id || "",
-      store_id: storeId,
+      store_id: selectedStore.id,
       food_category_id: categoryId,
       name: "",
       image: "",
@@ -345,10 +346,10 @@ const FoodItemDrawer = ({
                       flex={4}
                     />
                     <Input
+                      disabled
                       placeholder="EUR"
                       name="currency"
-                      value={foodItemData.currency}
-                      onInput={updateFormData}
+                      defaultValue={selectedStore?.currency}
                       flex={1}
                     />
                   </HStack>

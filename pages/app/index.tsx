@@ -29,6 +29,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 
+  try {
+    let stats = await fetch("http://localhost:3000/api/stats", {
+      method: "POST",
+      body: JSON.stringify({ userId: user.id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    stats = await stats.json();
+
+    console.log(stats);
+  } catch (e) {
+    console.log(e);
+    return {
+      props: {},
+    };
+  }
+
   return {
     props: {},
   };

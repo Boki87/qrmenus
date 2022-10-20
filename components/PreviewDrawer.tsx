@@ -66,7 +66,7 @@ const PreviewDrawer = () => {
         <DrawerCloseButton onClick={onClose} />
         <DrawerHeader borderBottomWidth="1px">Preview</DrawerHeader>
         <DrawerBody p="0px" overflowY="auto">
-          {!isLoading && storeData && <GlobalStore storeData={storeData} />}
+          {!isLoading && storeData && <GlobalStore storeData={storeData} isInDevMode={true} />}
           {isLoading && (
             <Box
               h="full"
