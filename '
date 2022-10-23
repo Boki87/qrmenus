@@ -1,0 +1,23 @@
+import {Box, Text, useColorModeValue} from '@chakra-ui/react'
+import {IoStorefrontSharp} from 'react-icons/io5'
+import {MdFastfood} from 'react-icons/md'
+
+
+interface StoreTotalViews {
+    storeViews: number;
+    foodsViews: number;
+}
+
+const StoreTotalViews = ({storeViews, foodsViews}: StoreTotalViews) => {
+
+    return (
+    <Box borderRadius="xl" shadow="xl" p="20px">
+   
+            <Text fontWeight="bold" fontSize="3xl" mb="15px" color={useColorModeValue('gray.600', 'white')}>Total views:</Text>
+            <Text fontSize="xl"><IoStorefrontSharp style={{display: 'inline'}} /> Stores: <Text fontWeight="bold" display="inline">{storeViews}</Text></Text>
+            <Text fontSize="xl"><MdFastfood style={{display: 'inline'}} /> Foods: <Text fontWeight="bold" display="inline">{foodsViews}</Text></Text>
+        </Box>
+    )
+}
+
+export default StoreTotalViews

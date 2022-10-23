@@ -3,21 +3,25 @@ import { supabase } from "./supabase-client";
 interface ResProps {
   stores: any[];
   foods: any[];
-  store_views: number;
-  foods_views: number;
+  total_store_views: number;
+  total_foods_views: number;
+  store_views: any[];
+  foods_views: any[];
 }
 
 const fetchStatsForUser = async (userId: string) => {
   const res: ResProps = {
     stores: [],
     foods: [],
-    store_views: 0,
-    foods_views: 0,
+    store_views: [],
+    foods_views: [],
+    total_store_views: 0,
+    total_foods_views: 0,
   };
   //get number of stores
   const { data: stores, error: storesError } = await supabase
     .from("stores")
-    .select("name")
+    .select("id, name, cover")
     .match({ user_id: userId });
 
   if (storesError) {
@@ -28,7 +32,7 @@ const fetchStatsForUser = async (userId: string) => {
   //get number of foods
   const { data: foods, error: foodsError } = await supabase
     .from("foods")
-    .select("name")
+    .select("id, name, image")
     .match({ user_id: userId });
 
   if (foodsError) {
@@ -39,28 +43,60 @@ const fetchStatsForUser = async (userId: string) => {
   //get total number of views for all stores
   const { data: storeViews, error: storeViewsError } = await supabase
     .from("store_stats")
-    .select("*")
+    .select("*, stores(name)")
     .match({ user_id: userId });
 
   if (storeViewsError) {
     throw storeViewsError;
   }
 
-  res.store_views = storeViews.length;
+  res.total_store_views = storeViews.length;
+  res.store_views = storeViews;
+
+  res.stores = res.stores.map((store) => {
+    let count = 0;
+    storeViews.forEach((view) => {
+      if (view.store_id === store.id) {
+        count += 1;
+      }
+    });
+    store.views = count;
+    return store;
+  });
+
+  res.stores.sort((a, b) => {
+    return b.views - a.views;
+  });
 
   //get total number of views for all foods
   const { data: foodsViews, error: foodsViewsError } = await supabase
     .from("food_stats")
-    .select("*")
+    .select("*, foods(name)")
     .match({ user_id: userId });
 
   if (foodsViewsError) {
     throw foodsViewsError;
   }
 
-  res.foods_views = foodsViews.length;
+  res.total_foods_views = foodsViews.length;
+  res.foods_views = foodsViews;
 
-  return res
+  res.foods = res.foods.map((food) => {
+    let count = 0;
+    foodsViews.forEach((f) => {
+      if (f.food_id === food.id) {
+        count += 1;
+      }
+    });
+    food.views = count;
+    return food;
+  });
+
+  res.foods.sort((a, b) => {
+    return b.views - a.views;
+  });
+
+  return res;
 };
 
 export { fetchStatsForUser };

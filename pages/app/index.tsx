@@ -1,15 +1,140 @@
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Grid,
+  GridItem,
+  Text,
+  Image,
+  useColorModeValue,
+  Spacer,
+} from "@chakra-ui/react";
 import type { GetServerSideProps, NextPage } from "next";
 import { supabase } from "../../api/supabase-client";
 import AppLayout from "../../components/AppLayout";
 import AppContainer from "../../components/Container";
+import { DashboardStats } from "../../types/DashboardStats";
+import ViewsChart from "../../components/dashboard/ViewsChart";
+import { useAppSelector } from "../../app/hooks";
+import StoreTotalViews from "../../components/dashboard/StoreTotalViews";
 
-const AppPage: NextPage = () => {
+const AppPage: NextPage<DashboardStats> = ({ stats }) => {
+  console.log(stats);
+
+  const user = useAppSelector((state) => state.user.user);
+    const bg = useColorModeValue("white", "gray.700")
+    const color = useColorModeValue("gray.600", "white")
+
+  if (!stats) {
+    return (
+      <AppLayout>
+        <AppContainer>
+          <Text>Could not fetch data</Text>
+        </AppContainer>
+      </AppLayout>
+    );
+  }
+
   return (
     <AppLayout>
       <AppContainer>
-        <Text>Dashboard</Text>
-        <Box h="3000px"></Box>
+        <Box>
+          <Text fontSize="2xl">Welcome back, {user?.name}</Text>
+        </Box>
+        <ViewsChart views={stats.store_views} />
+        <Grid
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          }}
+          gap="3"
+        >
+          <StoreTotalViews
+            storeViews={stats.total_store_views}
+            foodsViews={stats.total_foods_views}
+          />
+          <Box
+            borderRadius="xl"
+            shadow="xl"
+            overflow="hidden"
+            display="flex"
+            flexDirection="column"
+            bg={bg}
+          >
+            <Box p="20px">
+              <Text
+                fontSize="xl"
+                fontWeight="bold"
+                color={color}
+              >
+                Top performing store
+              </Text>
+              <HStack fontSize="xl">
+                <Text>{stats.stores[0].name}</Text>
+                <Spacer />
+                <Text fontWeight="bold">{stats.stores[0].views}</Text>
+                <Text>{stats.stores[0].views === 1 ? "visti" : "visits"}</Text>
+              </HStack>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flex={1}
+            >
+              <Image
+                src={
+                  stats.stores[0].cover
+                    ? stats.stores[0].cover
+                    : "images/undraw/store.svg"
+                }
+                minW="100%"
+                minH="100%"
+              />
+            </Box>
+          </Box>
+
+          <Box
+            borderRadius="xl"
+            shadow="xl"
+            overflow="hidden"
+            display="flex"
+            flexDirection="column"
+            bg={bg}
+          >
+            <Box p="20px">
+              <Text
+                fontSize="xl"
+                fontWeight="bold"
+                color={color}
+              >
+                Top performing food
+              </Text>
+              <HStack fontSize="xl">
+                <Text>{stats.foods[0].name}</Text>
+                <Spacer />
+                <Text fontWeight="bold">{stats.foods[0].views}</Text>
+                <Text>{stats.foods[0].views === 1 ? "view" : "views"}</Text>
+              </HStack>
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flex={1}
+            >
+              <Image
+                src={
+                  stats.foods[0].image
+                    ? stats.foods[0].image
+                    : "images/undraw/dine.svg"
+                }
+                minW="100%"
+                minH="100%"
+              />
+            </Box>
+          </Box>
+        </Grid>
       </AppContainer>
     </AppLayout>
   );
@@ -39,7 +164,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     });
     stats = await stats.json();
 
-    console.log(stats);
+    return {
+      props: {
+        stats,
+      },
+    };
+    //console.log(stats);
   } catch (e) {
     console.log(e);
     return {
