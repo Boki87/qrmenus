@@ -32,7 +32,7 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
   const user = useAppSelector((state) => state.user.user);
   async function fetchStores() {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       if (user?.id) {
         const updatedStores = await fetchStoresForUser(user?.id);
         setStoresArr(updatedStores);
@@ -50,6 +50,22 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
         openConfirmDialog("Sure yuo want to delete this store?")
       );
       if (isConfirmed) {
+        const { data: foodData, error: foodError } = await supabase
+          .from("foods")
+          .delete()
+          .match({ store_id: id });
+        if (foodError) {
+          throw foodError;
+        }
+
+        const { data: categoriesData, error: categoriesError } = await supabase
+          .from("food_categories")
+          .delete()
+          .match({ store_id: id });
+        if (categoriesError) {
+          throw categoriesError;
+        }
+
         const { data, error } = await supabase
           .from("stores")
           .delete()
@@ -95,7 +111,7 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
         >
           {storesArr &&
             !isLoading &&
-            storesArr.map((store) => (
+            storesArr.map((store, index) => (
               <StoreCard
                 store={store}
                 onEditStore={(id?: string) => {
@@ -106,6 +122,7 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
                 }}
                 onDeleteStore={deleteStoreHandler}
                 key={store.id}
+                index={index}
               />
             ))}
         </Grid>

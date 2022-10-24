@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Box, HStack, Text, useColorModeValue } from "@chakra-ui/react";
-import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { GiKnifeFork } from "react-icons/gi";
 import {
@@ -8,7 +7,6 @@ import {
   MdOutlineBarChart,
   MdSpaceDashboard,
 } from "react-icons/md";
-import { BsBadgeTm } from "react-icons/bs";
 
 const buttons = [
   {
@@ -27,12 +25,6 @@ const buttons = [
     title: "foods",
     href: "/app/foods",
     icon: <GiKnifeFork />,
-  },
-
-  {
-    title: "stats",
-    href: "/app/stats",
-    icon: <MdOutlineBarChart />,
   },
 ];
 

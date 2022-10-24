@@ -16,13 +16,12 @@ import { DashboardStats } from "../../types/DashboardStats";
 import ViewsChart from "../../components/dashboard/ViewsChart";
 import { useAppSelector } from "../../app/hooks";
 import StoreTotalViews from "../../components/dashboard/StoreTotalViews";
+import AnimatedSection from "../../components/AnimatedSection";
 
 const AppPage: NextPage<DashboardStats> = ({ stats }) => {
-  console.log(stats);
-
   const user = useAppSelector((state) => state.user.user);
-    const bg = useColorModeValue("white", "gray.700")
-    const color = useColorModeValue("gray.600", "white")
+  const bg = useColorModeValue("white", "gray.700");
+  const color = useColorModeValue("gray.600", "white");
 
   if (!stats) {
     return (
@@ -49,91 +48,97 @@ const AppPage: NextPage<DashboardStats> = ({ stats }) => {
           }}
           gap="3"
         >
-          <StoreTotalViews
-            storeViews={stats.total_store_views}
-            foodsViews={stats.total_foods_views}
-          />
-          <Box
-            borderRadius="xl"
-            shadow="xl"
-            overflow="hidden"
-            display="flex"
-            flexDirection="column"
-            bg={bg}
-          >
-            <Box p="20px">
-              <Text
-                fontSize="xl"
-                fontWeight="bold"
-                color={color}
+          <AnimatedSection delay={0.1}>
+            <StoreTotalViews
+              storeViews={stats.total_store_views}
+              foodsViews={stats.total_foods_views}
+            />
+          </AnimatedSection>
+          {stats?.stores[0] ? (
+            <AnimatedSection delay={0.2}>
+              <Box
+                borderRadius="xl"
+                shadow="xl"
+                overflow="hidden"
+                display="flex"
+                flexDirection="column"
+                bg={bg}
+                h="full"
               >
-                Top performing store
-              </Text>
-              <HStack fontSize="xl">
-                <Text>{stats.stores[0].name}</Text>
-                <Spacer />
-                <Text fontWeight="bold">{stats.stores[0].views}</Text>
-                <Text>{stats.stores[0].views === 1 ? "visti" : "visits"}</Text>
-              </HStack>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flex={1}
-            >
-              <Image
-                src={
-                  stats.stores[0].cover
-                    ? stats.stores[0].cover
-                    : "images/undraw/store.svg"
-                }
-                minW="100%"
-                minH="100%"
-              />
-            </Box>
-          </Box>
+                <Box p="20px">
+                  <Text fontSize="xl" fontWeight="bold" color={color}>
+                    Top performing store
+                  </Text>
+                  <HStack fontSize="xl">
+                    <Text>{stats.stores[0].name}</Text>
+                    <Spacer />
+                    <Text fontWeight="bold">{stats.stores[0].views}</Text>
+                    <Text>
+                      {stats.stores[0].views === 1 ? "visti" : "visits"}
+                    </Text>
+                  </HStack>
+                </Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  flex={1}
+                >
+                  <Image
+                    src={
+                      stats.stores[0].cover
+                        ? stats.stores[0].cover
+                        : "images/undraw/store.svg"
+                    }
+                    minW="100%"
+                    minH="100%"
+                  />
+                </Box>
+              </Box>
+            </AnimatedSection>
+          ) : null}
 
-          <Box
-            borderRadius="xl"
-            shadow="xl"
-            overflow="hidden"
-            display="flex"
-            flexDirection="column"
-            bg={bg}
-          >
-            <Box p="20px">
-              <Text
-                fontSize="xl"
-                fontWeight="bold"
-                color={color}
+          {stats?.foods[0] ? (
+            <AnimatedSection delay={0.3}>
+              <Box
+                borderRadius="xl"
+                shadow="xl"
+                overflow="hidden"
+                display="flex"
+                flexDirection="column"
+                bg={bg}
+                h="full"
               >
-                Top performing food
-              </Text>
-              <HStack fontSize="xl">
-                <Text>{stats.foods[0].name}</Text>
-                <Spacer />
-                <Text fontWeight="bold">{stats.foods[0].views}</Text>
-                <Text>{stats.foods[0].views === 1 ? "view" : "views"}</Text>
-              </HStack>
-            </Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              flex={1}
-            >
-              <Image
-                src={
-                  stats.foods[0].image
-                    ? stats.foods[0].image
-                    : "images/undraw/dine.svg"
-                }
-                minW="100%"
-                minH="100%"
-              />
-            </Box>
-          </Box>
+                <Box p="20px">
+                  <Text fontSize="xl" fontWeight="bold" color={color}>
+                    Top performing food
+                  </Text>
+                  <HStack fontSize="xl">
+                    <Text>{stats.foods[0]?.name}</Text>
+                    <Spacer />
+                    <Text fontWeight="bold">{stats.foods[0].views}</Text>
+                    <Text>{stats.foods[0].views === 1 ? "view" : "views"}</Text>
+                  </HStack>
+                </Box>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  flex={1}
+                >
+                  <Image
+                    src={
+                      stats.foods[0].image
+                        ? stats.foods[0].image
+                        : "images/undraw/dine.svg"
+                    }
+                    minW="100%"
+                    minH="100%"
+                  />
+                </Box>
+              </Box>
+            </AnimatedSection>
+          ) : null}
         </Grid>
       </AppContainer>
     </AppLayout>

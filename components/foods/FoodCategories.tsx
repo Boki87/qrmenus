@@ -9,9 +9,7 @@ import {
   Spacer,
   Spinner,
   Center,
-  Tooltip,
 } from "@chakra-ui/react";
-import update from "immutability-helper";
 import { Identifier, XYCoord } from "dnd-core";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -75,7 +73,7 @@ const FoodCategories = ({
           onClick={onOpenModal}
           rightIcon={<HiOutlinePlus />}
           colorScheme="blue"
-          disabled={selectedStore === ""}
+          disabled={!selectedStore}
           size="sm"
         >
           NEW

@@ -6,6 +6,7 @@ import {
   cookieStorageManagerSSR,
   localStorageManager,
 } from "@chakra-ui/react";
+import { AnimatePresence } from "framer-motion";
 import Router from "next/router";
 import theme from "../style/theme";
 import { Provider } from "react-redux";
@@ -27,7 +28,7 @@ interface AppPropsExtended {
   };
 }
 
-function MyApp({ Component, pageProps }: AppProps & AppPropsExtended) {
+function MyApp({ Component, pageProps, router }: AppProps & AppPropsExtended) {
   const { cookies } = pageProps;
 
   const colorModeManager =
@@ -39,7 +40,9 @@ function MyApp({ Component, pageProps }: AppProps & AppPropsExtended) {
     <Provider store={store}>
       <AuthWrapper>
         <ChakraProvider theme={theme} colorModeManager={colorModeManager}>
-          <Component {...pageProps} />
+          <AnimatePresence exitBeforeEnter initial={true}>
+            <Component {...pageProps} key={router.route}/>
+          </AnimatePresence>
           <AppConfirmDialog />
           <PreviewDrawer />
         </ChakraProvider>

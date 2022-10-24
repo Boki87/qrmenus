@@ -19,24 +19,23 @@ import { useAppDispatch } from "../../app/hooks";
 import { openPreview } from "../../features/modals/modal-slice";
 import { APP_URL } from "../../api/supabase-client";
 import QrCodeModal from "./QrCodeModal";
+import AnimatedSection from "../AnimatedSection";
 
 const StoreCard = ({
   store,
   onEditStore,
   onDeleteStore,
+  index,
 }: {
   store: Store;
   onEditStore: (id?: string) => void;
   onDeleteStore: (id?: string) => void;
+  index: number;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useAppDispatch();
 
   function openQrCode() {
-    /*    window.open(
-      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${APP_URL}/store/${store.id}`,
-      "_blank"
-    );*/
     setIsModalOpen(true);
   }
 
@@ -47,8 +46,10 @@ const StoreCard = ({
     }
   }
 
+  const delay = index / 10;
+
   return (
-    <>
+    <AnimatedSection delay={delay}>
       <Box
         w="full"
         h="300px"
@@ -123,7 +124,7 @@ const StoreCard = ({
           setIsModalOpen(false);
         }}
       />
-    </>
+    </AnimatedSection>
   );
 };
 

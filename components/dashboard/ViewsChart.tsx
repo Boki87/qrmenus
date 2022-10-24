@@ -2,29 +2,35 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import AnimatedSection from '../AnimatedSection'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
 );
+
 
 interface ViewsChartProps {
   views: { created_at: string; id: string }[];
 }
 
 const ViewsChart = ({ views }: ViewsChartProps) => {
+
+    if(views.length === 0)  {
+        return null 
+    }
+
+
   const options = {
     responsive: true,
     plugins: {
@@ -78,22 +84,24 @@ const ViewsChart = ({ views }: ViewsChartProps) => {
       {
         label: "views",
         data: datasetsData,
-        backgroundColor: "#00f",
+        backgroundColor: "#4299E1",
       },
     ],
   };
 
   return (
-    <div
-      style={{
-        background: "#fff",
-        borderRadius: "10px",
-        padding: "10px",
-        marginBottom: "15px",
-      }}
-    >
-      <Line options={options} data={data} />
-    </div>
+    <AnimatedSection>
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: "10px",
+          padding: "10px",
+          marginBottom: "15px",
+        }}
+      >
+        <Bar options={options} data={data} />
+      </div>
+    </AnimatedSection>
   );
 };
 

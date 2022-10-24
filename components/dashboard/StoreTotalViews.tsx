@@ -11,7 +11,7 @@ const StoreTotalViews = ({ storeViews, foodsViews }: StoreTotalViews) => {
   const bg = useColorModeValue("white", "gray.700");
   const color = useColorModeValue("gray.600", "white");
   return (
-    <Box borderRadius="xl" shadow="xl" p="20px" bg={bg}>
+    <Box borderRadius="xl" shadow="xl" p="20px" h="full" bg={bg}>
       <Text fontWeight="bold" fontSize={["2xl", "3xl"]} mb="15px" color={color}>
         Total views:
       </Text>

@@ -115,7 +115,7 @@ const FoodItems = () => {
               }
             }}
             size="sm"
-            disabled={selectedStore?.id === ""}
+            disabled={!selectedStore}
             colorScheme="twitter"
             fontSize="xl"
           >

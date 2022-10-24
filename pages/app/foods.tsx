@@ -21,6 +21,7 @@ import {
   setSelectedCategory,
   setCategoryToEdit,
 } from "../../features/food/food-slice";
+import AnimatedSection from "../../components/AnimatedSection";
 
 interface FoodsPageProps {
   stores: Store[] | [];
@@ -74,7 +75,7 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
 
   async function storeSelectHandler(e: SyntheticEvent) {
     let { value: selectedValue } = e.target as HTMLSelectElement;
-    dispatch(setSelectedStore(stores.filter(s => s.id === selectedValue)[0]));
+    dispatch(setSelectedStore(stores.filter((s) => s.id === selectedValue)[0]));
     dispatch(setSelectedCategory(-1));
     if (selectedValue) {
       try {
@@ -135,42 +136,46 @@ const Foods: NextPage<FoodsPageProps> = ({ stores, user }) => {
     <>
       <AppLayout>
         <AppContainer>
-          <HStack mt="20px">
-            <Select
-              onChange={storeSelectHandler}
-              variant="filled"
-              placeholder="Select a store"
+          <AnimatedSection>
+            <HStack mt="20px">
+              <Select
+                onChange={storeSelectHandler}
+                variant="filled"
+                placeholder="Select a store"
+              >
+                {stores.map((store) => (
+                  <option value={store.id} key={store.id}>
+                    {store.name}
+                  </option>
+                ))}
+              </Select>
+            </HStack>
+          </AnimatedSection>
+          <AnimatedSection delay={0.2}>
+            <Grid
+              mt="20px"
+              templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" }}
+              gap={{ base: 0, md: 2 }}
+              mb="100px"
             >
-              {stores.map((store) => (
-                <option value={store.id} key={store.id}>
-                  {store.name}
-                </option>
-              ))}
-            </Select>
-          </HStack>
-          <Grid
-            mt="20px"
-            templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" }}
-            gap={{ base: 0, md: 2 }}
-            mb="100px"
-          >
-            <GridItem minW="200px">
-              <FoodCategories
-                categories={categories}
-                loading={loadingCategories}
-                onOpenModal={() => setIsCategoryModalOpen(true)}
-                reorderCategories={reorderCategoriesHandler}
-                onEdit={(id) => {
-                  dispatch(setCategoryToEdit(id));
-                  setIsCategoryModalOpen(true);
-                }}
-                onDelete={deleteCategoryHandler}
-              />
-            </GridItem>
-            <GridItem colSpan={3}>
-              <FoodItems />
-            </GridItem>
-          </Grid>
+              <GridItem minW="200px">
+                <FoodCategories
+                  categories={categories}
+                  loading={loadingCategories}
+                  onOpenModal={() => setIsCategoryModalOpen(true)}
+                  reorderCategories={reorderCategoriesHandler}
+                  onEdit={(id) => {
+                    dispatch(setCategoryToEdit(id));
+                    setIsCategoryModalOpen(true);
+                  }}
+                  onDelete={deleteCategoryHandler}
+                />
+              </GridItem>
+              <GridItem colSpan={3}>
+                <FoodItems />
+              </GridItem>
+            </Grid>
+          </AnimatedSection>
         </AppContainer>
       </AppLayout>
       <FoodCategoryModal
