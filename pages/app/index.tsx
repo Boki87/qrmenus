@@ -85,6 +85,7 @@ const AppPage: NextPage<DashboardStats> = ({ stats }) => {
                   flex={1}
                 >
                   <Image
+                    alt="no store image"
                     src={
                       stats.stores[0].cover
                         ? stats.stores[0].cover
@@ -127,6 +128,7 @@ const AppPage: NextPage<DashboardStats> = ({ stats }) => {
                   flex={1}
                 >
                   <Image
+                    alt="food image"
                     src={
                       stats.foods[0].image
                         ? stats.foods[0].image

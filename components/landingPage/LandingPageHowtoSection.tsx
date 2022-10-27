@@ -83,7 +83,9 @@ const LandingPageHowtoSection = ({
             <Box maxW="300px">
               <UnorderedList fontSize="xl" color={titleColor}>
                 {listItems &&
-                  listItems.map((item) => <ListItem>{item}</ListItem>)}
+                  listItems.map((item, i) => (
+                    <ListItem key={`${item}-${i}`}>{item}</ListItem>
+                  ))}
               </UnorderedList>
               {text && text !== "" ? (
                 <Text fontSize="xl" color={titleColor}>

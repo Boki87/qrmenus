@@ -105,7 +105,11 @@ const StoreHero = (props: Store) => {
               </a>
             )}
             {address && address !== "" && (
-              <a href={`http://maps.google.co.in/maps?q=${address}`} target="_blank">
+              <a
+                href={`http://maps.google.co.in/maps?q=${address}`}
+                rel="noreferrer"
+                target="_blank"
+              >
                 <IconButton
                   aria-label="adress"
                   colorScheme="blackAlpha"

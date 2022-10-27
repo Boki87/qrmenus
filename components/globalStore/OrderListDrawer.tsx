@@ -50,12 +50,13 @@ const OrderListDrawer = () => {
         </DrawerHeader>
         <DrawerBody p="10px" pb="60px" overflowY="auto">
           <Box>
-            {orderList.map((item) => (
+            {orderList.map((item, i) => (
               <OrderItem
                 name={item.name}
                 currency={currency}
                 price={item.price}
                 amount={item.amount}
+                key={`${item.name}-${i}`}
               />
             ))}
           </Box>
