@@ -8,6 +8,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { Food } from "../../types/Food";
+import { useOrderListContext } from "./";
 
 interface StoreFeaturedFoodProps {
   featuredFood: Food[];
@@ -59,6 +60,7 @@ const FeaturedFoodCard = ({
   food: Food;
   onViewFood: (data: Food) => void;
 }) => {
+  const { currency } = useOrderListContext();
   return (
     <Box
       onClick={() => onViewFood(food)}
@@ -100,7 +102,7 @@ const FeaturedFoodCard = ({
         </Text>
         <Spacer />
         <Button bg="black" borderRadius="full" size="xs" color="white">
-          {food.price} {food.currency}
+          {food.price} {currency}
         </Button>
       </HStack>
     </Box>

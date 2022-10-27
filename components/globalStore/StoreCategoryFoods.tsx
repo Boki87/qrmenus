@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Food } from "../../types/Food";
 import { MdFastfood, MdNoFood } from "react-icons/md";
+import { useOrderListContext } from "./";
 
 interface StoreCategoryFoodsProps {
   foods: Food[];
@@ -39,7 +40,6 @@ const StoreCategoryFoods = ({
               image={food.image}
               name={food.name}
               price={food.price}
-              currency={food.currency}
               size={food.size}
               size_unit={food.size_unit}
               key={food.id}
@@ -62,7 +62,6 @@ const StoreCategoryFoodItem = ({
   image,
   name,
   price,
-  currency,
   size,
   size_unit,
   onViewFood,
@@ -75,6 +74,8 @@ const StoreCategoryFoodItem = ({
   size_unit?: string;
   onViewFood: () => void;
 }) => {
+  const { currency } = useOrderListContext();
+
   return (
     <HStack onClick={onViewFood} h="120px" minH="120px" w="full" color="black">
       <Box
@@ -112,7 +113,9 @@ const StoreCategoryFoodItem = ({
       </Box>
       <VStack flex={1} maxW="250px" alignItems="flex-start">
         <Box>
-          <Text fontWeight="bold" cursor="pointer">{name}</Text>
+          <Text fontWeight="bold" cursor="pointer">
+            {name}
+          </Text>
         </Box>
         <HStack>
           <Button size="sm" borderRadius="full">

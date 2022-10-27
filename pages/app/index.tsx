@@ -74,7 +74,7 @@ const AppPage: NextPage<DashboardStats> = ({ stats }) => {
                     <Spacer />
                     <Text fontWeight="bold">{stats.stores[0].views}</Text>
                     <Text>
-                      {stats.stores[0].views === 1 ? "visti" : "visits"}
+                      {stats.stores[0].views === 1 ? "visit" : "visits"}
                     </Text>
                   </HStack>
                 </Box>

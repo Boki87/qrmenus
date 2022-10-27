@@ -85,9 +85,7 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
     <AppLayout>
       <AppContainer>
         <HStack>
-          <Text fontSize="xl" fontWeight="bold">
-            Your stores
-          </Text>
+          <Text fontSize="xl">Your stores</Text>
           <Spacer />
           <Button
             onClick={() => {
@@ -96,6 +94,7 @@ const Stores: NextPage<{ stores?: Store[] }> = ({ stores }) => {
             }}
             rightIcon={<IoAddSharp />}
             colorScheme="blue"
+            size="sm"
           >
             NEW STORE
           </Button>
