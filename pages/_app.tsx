@@ -40,8 +40,8 @@ function MyApp({ Component, pageProps, router }: AppProps & AppPropsExtended) {
     <Provider store={store}>
       <AuthWrapper>
         <ChakraProvider theme={theme} colorModeManager={colorModeManager}>
-          <AnimatePresence exitBeforeEnter initial={true}>
-            <Component {...pageProps} key={router.route}/>
+          <AnimatePresence mode="wait" initial={true}>
+            <Component {...pageProps} key={router.route} />
           </AnimatePresence>
           <AppConfirmDialog />
           <PreviewDrawer />
