@@ -6,12 +6,12 @@ import {
   VStack,
   HStack,
   Text,
-  Link
+  Link,
 } from "@chakra-ui/react";
-import NextLink from 'next/link'
+import NextLink from "next/link";
 import AppLogo from "./AppLogo";
 import AppContainer from "./Container";
-import { BsTwitter, BsEnvelopeFill } from "react-icons/bs";
+import { BsGithub, BsTwitter, BsEnvelopeFill } from "react-icons/bs";
 
 const LandingFooter = () => {
   return (
@@ -24,35 +24,55 @@ const LandingFooter = () => {
             <VStack alignItems="flex-start">
               <AppLogo />
               <HStack mt="15px">
-                <IconButton colorScheme="blue" borderRadius="full" variant="ghost" aria-label="twitter profile" icon={<BsTwitter />} />
-                <IconButton colorScheme="blue" borderRadius="full" variant="ghost" aria-label="twitter profile" icon={<BsEnvelopeFill />} />
+                <Link href="https://github.com/Boki87/qrmenus" target="_blank">
+                  <IconButton
+                    colorScheme="blue"
+                    borderRadius="full"
+                    variant="ghost"
+                    aria-label="twitter profile"
+                    icon={<BsGithub />}
+                  />
+                </Link>
+                <IconButton
+                  colorScheme="blue"
+                  borderRadius="full"
+                  variant="ghost"
+                  aria-label="twitter profile"
+                  icon={<BsTwitter />}
+                />
+                <IconButton
+                  colorScheme="blue"
+                  borderRadius="full"
+                  variant="ghost"
+                  aria-label="twitter profile"
+                  icon={<BsEnvelopeFill />}
+                />
               </HStack>
             </VStack>
-            <Text color="gray.500" mt="15px">© by myapp. All rights reserved.</Text>
+            <Text color="gray.500" mt="15px">
+              © by QRMenus. All rights reserved.
+            </Text>
           </GridItem>
           <GridItem mb="20px">
             <VStack alignItems="flex-start">
-                <Text fontWeight="bold">Links</Text>
-                <NextLink href="#">
-                    <Link >Link 1</Link>
-                </NextLink>
-                <NextLink href="#">
-                    <Link >Link 2</Link>
-                </NextLink>
-                <NextLink href="#">
-                    <Link >Link 3</Link>
-                </NextLink>
+              <Text fontWeight="bold">Links</Text>
+              <NextLink href="#">
+                <Link>Home</Link>
+              </NextLink>
+              <NextLink href="#">
+                <Link>How it works</Link>
+              </NextLink>
             </VStack>
           </GridItem>
           <GridItem mb="20px">
             <VStack alignItems="flex-start">
-                <Text fontWeight="bold">Legal</Text>
-                <NextLink href="#">
-                    <Link >Privacy Policy</Link>
-                </NextLink>
-                <NextLink href="#">
-                    <Link >Terms of Service</Link>
-                </NextLink>
+              <Text fontWeight="bold">Legal</Text>
+              <NextLink href="#">
+                <Link>Privacy Policy</Link>
+              </NextLink>
+              <NextLink href="#">
+                <Link>Terms of Service</Link>
+              </NextLink>
             </VStack>
           </GridItem>
         </Grid>

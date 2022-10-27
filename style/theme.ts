@@ -5,6 +5,7 @@ const styles = {
     html: {
       h: "100%",
       w: "100%",
+      scrollBehavior: "smooth"
     },
     body: {
       h: "100%",

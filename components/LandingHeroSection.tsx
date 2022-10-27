@@ -55,6 +55,9 @@ const LandingHeroSection = () => {
                 </Button>
               </NextLink>
             </HStack>
+                            <Text>
+                            QRMenus is a passion project. And it will be free to use for anyone. All of the source code can be found on <a href="https://github.com/Boki87/qrmenus" target="_blank" style={{color: `var(--chakra-colors-blue-500)`}}>github.com</a>
+                        </Text>
           </VStack>
         </Center>
         <AnimatedSection delay={0.4}>

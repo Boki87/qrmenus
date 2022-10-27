@@ -1,60 +1,104 @@
-import {Center, Text, Box, useColorModeValue, VStack} from "@chakra-ui/react"
-import Image from "next/image"
-import AppContainer from "./Container"
+import {
+  AspectRatio,
+  Center,
+  Text,
+  Box,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
+import AppContainer from "./Container";
+import AnimatedSection from "./AnimatedSection";
+import LandingPageHowtoSection from "./landingPage/LandingPageHowtoSection";
 
-const featuresArr = [
-    {
-        title: 'supabase',
-        img: '/images/supabase.svg',
-        description: 'A very powerful and flexible baas for modern web applications.'
-    },
-
-    {
-        title: 'next',
-        img: '/images/nextjs.svg',
-        description: 'A production-ready react framework with the great developer experience.'
-    },
-    {
-        title: 'chakra',
-        img: '/images/chakra.svg',
-        description: 'A UI component library that gives full customizability and accessible components.'
-    },
-    {
-        title: 'redux',
-        img: '/images/redux.png',
-        description: 'A Predictable State Container for JS Apps'
-    },
-]
-
+const howtos = [
+  {
+    image: "images/preview/qrmenus3.jpg",
+    h1: "Manage all of your Stores",
+    listItems: [
+      "Create stores",
+      "Update store details",
+      "Delete stores",
+      "Upload store cover image",
+      "etc",
+    ],
+    direction: "row",
+  },
+  {
+    image: "images/preview/qrmenus4.jpg",
+    h1: "Create and manage food categories",
+    text: "Reorder & set title for each",
+    direction: "row-reverse",
+  },
+  {
+    image: "images/preview/qrmenus5.jpg",
+    h1: "Add foods to your categories",
+    listItems: [
+      "Edit food details",
+      "Set name",
+      "Upload image",
+      "Set to be featured on your menu",
+      "Remove from menu temporary by by toggling the 'is live' toggle",
+    ],
+    direction: "row",
+  },
+  {
+    image: "images/preview/qrmenus6.jpg",
+    h1: "Preview your menu at any time",
+    direction: "row-reverse",
+  },
+  {
+    image: "images/preview/qrmenus7.jpg",
+    h1: "View the QRCode image",
+    text: "Download the image for print, so customers can scan and view your beautifull digital menu 👏",
+    direction: "row",
+  },
+  {
+    image: "images/preview/qrcode.png",
+    imageContain: true,
+    h1: "Give it a go",
+    text: "Open up your mobile camera and just point at the QRCode",
+    direction: "row-reverse",
+  },
+];
 
 const LandingFeatures = () => {
-
-
-    return <Box bg={useColorModeValue('gray.100', 'gray.700')} py="50px">
-                <AppContainer>
-                    <Center>
-                        <VStack gap="20px" w="full">
-                            <Text as="h3" fontSize="4xl" fontWeight="bold" color={useColorModeValue('gray.700', 'gary.100')}>The Tech Behind</Text>
-                    {featuresArr.map( f => <FeatureDiv key={f.title} img={f.img} description={f.description} />)}
-                            </VStack> 
-                    </Center>
-
-                </AppContainer>
+  const titleColor = useColorModeValue("gray.600", "white");
+  return (
+    <Box bg={useColorModeValue("gray.100", "gray.700")} py="50px">
+      <AppContainer>
+        <AnimatedSection animateOnScroll={true}>
+          <Center mb="40px">
+            <AnimatedSection>
+                <Text
+                  id="howitworks"
+                  as="h3"
+                  fontSize="4xl"
+                  fontWeight="bold"
+                  color={titleColor}
+                >
+                  How it works
+                </Text>
+            </AnimatedSection>
+          </Center>
+        </AnimatedSection>
+        {howtos.map((howto) => (
+          <LandingPageHowtoSection
+            image={howto.image}
+            imageContain={howto.imageContain}
+            h1={howto.h1}
+            listItems={howto.listItems}
+            text={howto.text}
+            direction={
+              howto.direction && howto.direction === "row"
+                ? "row"
+                : "row-reverse"
+            }
+            key={howto.h1}
+          />
+        ))}
+      </AppContainer>
     </Box>
-}
+  );
+};
 
-export default LandingFeatures
-
-
-const FeatureDiv = ({img, description}: {img: string, description: string}) => {
-
-    return (
-        <Box w="full" minH="250px" bg={useColorModeValue('white', 'gray.500')} borderRadius="xl" display="flex" alignContent="center" justifyContent="center" flexDir="column" p="30px">
-            <Box textAlign="center" w="full" mb="20px">
-
-                <img src={img} style={{height: '80px', width:'auto', display:'inline'}} />
-            </Box>
-            <Text textAlign="center" fontSize="xl">{description}</Text>
-        </Box>
-    )
-}
+export default LandingFeatures;
