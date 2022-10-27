@@ -49,7 +49,7 @@ const StoreDrawer = ({
 
   const [storeData, setStoreData] = useState<Store>({
     id: "",
-    user_id: user?.id,
+    user_id: user?.id || "",
     name: "",
     cover: "",
     email: "",
@@ -62,6 +62,9 @@ const StoreDrawer = ({
   });
 
   function resetStoreData() {
+    if (!user?.id) {
+      return;
+    }
     setStoreData({
       id: "",
       user_id: user?.id,
@@ -121,7 +124,7 @@ const StoreDrawer = ({
     try {
       setIsUpdating(true);
 
-      if (storeId === "") {
+      if (storeId === "" && user?.id) {
         let { id, ...rest } = storeData;
         let insertData = rest;
         insertData.user_id = user?.id;
