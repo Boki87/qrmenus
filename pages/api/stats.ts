@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { fetchStatsForUser } from "../../api/stats";
+import { fetchStatsForUser } from "../../api/stats-helpers";
 
 interface ExtendedNextReq extends NextApiRequest {
   body: {
