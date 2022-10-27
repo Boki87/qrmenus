@@ -17,6 +17,7 @@ import ViewsChart from "../../components/dashboard/ViewsChart";
 import { useAppSelector } from "../../app/hooks";
 import StoreTotalViews from "../../components/dashboard/StoreTotalViews";
 import AnimatedSection from "../../components/AnimatedSection";
+import {APP_URL} from "../../api/supabase-client"
 
 const AppPage: NextPage<DashboardStats> = ({ stats }) => {
   const user = useAppSelector((state) => state.user.user);
@@ -162,7 +163,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   try {
-    let stats = await fetch("http://localhost:3000/api/stats", {
+    let stats = await fetch(`${APP_URL}/api/stats`, {
       method: "POST",
       body: JSON.stringify({ userId: user.id }),
       headers: {
@@ -183,8 +184,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {},
     };
   }
-
-  return {
-    props: {},
-  };
 };
