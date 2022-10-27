@@ -189,6 +189,7 @@ const GlobalStorePage = ({
         >
           <StoreHero
             id={storeData.id}
+            user_id={storeData.user_id}
             cover={storeData.cover}
             name={storeData.name}
             description={storeData.description}
