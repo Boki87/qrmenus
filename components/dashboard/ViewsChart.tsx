@@ -2,40 +2,37 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import AnimatedSection from '../AnimatedSection'
-
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+import AnimatedSection from "../AnimatedSection";
 
 ChartJS.defaults.font = {
-   family: "Segoe UI",
- };
-
+  family: "Segoe UI",
+};
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend
 );
-
 
 interface ViewsChartProps {
   views: { created_at: string; id: string }[];
 }
 
 const ViewsChart = ({ views }: ViewsChartProps) => {
-
-    if(views.length === 0)  {
-        return null 
-    }
-
+  if (views.length === 0) {
+    return null;
+  }
 
   const options = {
     responsive: true,
@@ -94,7 +91,7 @@ const ViewsChart = ({ views }: ViewsChartProps) => {
       },
     ],
   };
-
+    console.log(labels, datasetsData)
   return (
     <AnimatedSection>
       <div
@@ -105,7 +102,6 @@ const ViewsChart = ({ views }: ViewsChartProps) => {
           marginBottom: "15px",
         }}
       >
-        <Bar options={options} data={data} />
       </div>
     </AnimatedSection>
   );

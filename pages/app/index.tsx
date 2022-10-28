@@ -17,7 +17,7 @@ import ViewsChart from "../../components/dashboard/ViewsChart";
 import { useAppSelector } from "../../app/hooks";
 import StoreTotalViews from "../../components/dashboard/StoreTotalViews";
 import AnimatedSection from "../../components/AnimatedSection";
-import {APP_URL} from "../../api/supabase-client"
+import { APP_URL } from "../../api/supabase-client";
 
 const AppPage: NextPage<DashboardStats> = ({ stats }) => {
   const user = useAppSelector((state) => state.user.user);
@@ -40,7 +40,7 @@ const AppPage: NextPage<DashboardStats> = ({ stats }) => {
         <Box>
           <Text fontSize="2xl">Welcome back, {user?.name}</Text>
         </Box>
-        <ViewsChart views={stats.store_views} />
+        {/*<ViewsChart views={stats.store_views} />*/}
         <Grid
           templateColumns={{
             base: "repeat(1, 1fr)",
