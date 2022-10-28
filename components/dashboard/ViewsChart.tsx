@@ -10,6 +10,12 @@ import {
 import { Bar } from 'react-chartjs-2';
 import AnimatedSection from '../AnimatedSection'
 
+
+ChartJS.defaults.font = {
+   family: "Segoe UI",
+ };
+
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
