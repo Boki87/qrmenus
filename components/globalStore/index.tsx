@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { Box, LightMode, GlobalStyle } from "@chakra-ui/react";
+import { Box, GlobalStyle } from "@chakra-ui/react";
 import { GlobalStoreData } from "../../types/GlobalStorePage";
 import StoreHero from "./StoreHero";
 import StoreCategories from "./MenuCategories";
@@ -161,7 +161,7 @@ const GlobalStorePage = ({
   }, []);
 
   return (
-    <LightMode>
+    <>
       <GlobalStyle />
       <OrderListContext.Provider
         value={{
@@ -234,7 +234,7 @@ const GlobalStorePage = ({
 
         <OrderListDrawer />
       </OrderListContext.Provider>
-    </LightMode>
+    </>
   );
 };
 
