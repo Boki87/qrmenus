@@ -35,3 +35,9 @@ User stories:
  
  ![login](preview/screen4.png)
  
+ ![store page](preview/screen3.png)
+ 
+ ![food page](preview/screen2.png)
+ 
+ ![customer facing page](preview/screen1.png)
+ 
