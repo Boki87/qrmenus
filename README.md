@@ -27,4 +27,11 @@ User stories:
   * User can create food categories
   * User can rearange categoris order
   * User can create foods inside each category
+  * Ofcourse Dark/Light mode 
   
+  Some of the pages in the app:
+  
+ ![landing page](preview/screen5.png)
+ 
+ ![login](preview/screen4.png)
+ 
