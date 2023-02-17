@@ -1,16 +1,30 @@
-This is a starter template for writing full stack web apps.
+![preview image](/preview/screen2.png)
 
-The tech stack behind it: 
+# Contactless digital menus made easy
 
-1. Next Js
-2. Supabase
-3. Chakra UI
-4. Redux
+[DEMO](https://qrmenus-nu.vercel.app/)
+
+username: demo@email.com
+
+password: demouser123
+
+## This is a passion project built with love ❤️
+The main purpose of this app is to learn typescript and next js
+
+So the tech used to build this is:
+  * Typescript
+  * Next js
+  * Supabase
+  * Chakra UI
+  * React Redux
 
 
-Features out of the box:
-
-1. Auth with email and magic link
-2. Social login with google
-3. Protected rotes
-4. Landing page tamplate
+User stories:
+  * User can register/login with Email/password or magic link
+  * User can CRUD stores
+  * User can preview a store from the app
+  * Every store gets a qrcode image that the user can download and print
+  * User can create food categories
+  * User can rearange categoris order
+  * User can create foods inside each category
+  
