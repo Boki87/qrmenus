@@ -8,7 +8,7 @@ username: demo@email.com
 
 password: demouser123
 
-## This is a passion project built with love ❤️
+## This is a passion project
 The main purpose of this app is to learn typescript and next js
 
 So the tech used to build this is:
